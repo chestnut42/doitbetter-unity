@@ -7,7 +7,7 @@ Download and open **.unitypackage** of the latest release.
 
 ### Long
 
-If you feel a little adventerous today, do not hesitate to read through this repo. You can then just copy what you want in your project.
+If you feel a little adventurous today, do not hesitate to read through this repo. You then can just copy what you want in your project.
 
 ## Integration
 
@@ -37,7 +37,7 @@ GameBoostSDK.SetLoggingEnabled(true);
 
 ### Game Types
 
-We respect each games' personality. Carefully harvesting each event and put it in the right bucket.
+We respect each game's personality. Carefully harvesting each event and putting it in the right bucket.
 Different kind of Games need different treatment.
 
 Here's the list of currently supported integrations:
