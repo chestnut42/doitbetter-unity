@@ -58,6 +58,16 @@ There's no any requirements or restrictions to a format or structure of the data
 
 Same recommendation as for `roomDescription` data object are also valid for `balance`.
 
+```
+{
+  "data": {
+    "weaponData": {/* weapon json data */},
+    "enemiesData": {/* enemies data */},
+    ... etc ...
+  }
+}
+```
+
 
 ## Room object usage
 
