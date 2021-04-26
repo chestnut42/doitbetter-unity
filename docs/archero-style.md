@@ -61,7 +61,7 @@ Same recommendation as for `roomDescription` data object are also valid for `bal
 
 ## Room object usage
 
-After you successfully created a room object you can start sending events. It's recommended to utilise only one room object for a given room session to save some CPU, that is used to create a hash from give data objects. However it's not strictly necessary. If you need so, you can create a room object for each event you're sending.
+After you successfully created a room object you can start sending events. It's recommended to utilise only one room object for a given room session to save some CPU. This object is used to create and cache a hash constructed of given data objects. However it's not strictly necessary. If you need so, you can create a room object for each event you're sending.
 
 If the player died, and you are restarting the level instantly you're not required to create new room object.
 
