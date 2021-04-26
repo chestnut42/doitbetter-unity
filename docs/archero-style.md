@@ -41,7 +41,7 @@ This correlation between `roomName` and `roomDescription` can, of cource, change
 
 There's no any requirements or restrictions to a format or structure of the data in this object. However, please concider the following recommendations:
 1. Rule **number one** is: do **not** modify the data. That is, put different files, table rows, etc. in exact way as you read them. If you have some JSON file to describe your room or just a part of the room (e.g. a certain trap in the room) it's recommended to just put it to this data object **as is**
-1. Be consistent in the format. do **not** modify, if possible, the data object for a given room if the room didn't change. **However** if you really have changed the format of files rule **number one** takes precedence.
+1. Be consistent in the data structures. do **not** modify, if possible, the data object for a given room if the room didn't change. **However** if you really have changed the format of files rule **number one** takes precedence.
 1. Assume some space for files format modifications. Even if you have only one JSON describing the room, it's recommended to put it in the first or second tree level, e.g:
 ```
 {
