@@ -81,7 +81,14 @@ In other words, room object serves caching purposes **only**. It does **not** co
 
 All events have additional parameters to ones given at room creation.
 
+### Player State
 
-**WIP**
+
+### Dynamic Balance
+
+
+### Room PlayData
+
+
 **TODO**:
 - list and describe event parameters
