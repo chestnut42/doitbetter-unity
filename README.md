@@ -42,3 +42,16 @@ Different kind of Games need different treatment.
 
 Here's the list of currently supported integrations:
 * [Archero-style games](https://github.com/chestnut42/doitbetter-unity/blob/main/docs/archero-style.md)
+
+
+### Data Object
+
+Several APIs utilise concept of **Data Object**. **Data Object** is an object that contain any serializable data, including embedded **Data Objects**. In simple words it's the kind of data, that can be losslessly converted to JSON.
+
+In **Unity** this object is a `Dictionary<string, object>`. Such as:
+* **All** keys are `string`-s. That means **any** `Dictionary` on **any** level of data tree must have a `string` key type
+* Supported number types are:
+  * `int`, `uint`, `sbyte`, `byte`, `short`, `ushort`, `long`, `ulong`
+  * `float`, `double`, `decimal`
+* Any `object` that is not number and not a string will be called `ToString` and treated as a string
+* Objects that implement `IList` and `IDictionary` will be treated as such collections
