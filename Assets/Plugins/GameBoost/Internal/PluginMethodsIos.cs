@@ -1,9 +1,9 @@
+#if UNITY_IPHONE && !UNITY_EDITOR
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Plugins.GameBoost
 {
-#if UNITY_IPHONE && !UNITY_EDITOR
     internal class PluginMethodsIos : IPluginMethods
     {
         public void InitializeWith(string apiKey)
@@ -11,9 +11,9 @@ namespace Plugins.GameBoost
             _initializeWith(apiKey);
         }
 
-        public void SendEvent(string eventName, string jsonString)
+        public void SendEvent(string eventName, string jsonString, string deduplicateId)
         {
-            _sendEvent(eventName, jsonString);
+            _sendEvent(eventName, jsonString, deduplicateId);
         }
 
         public void SetLoggingEnabled(bool isLoggingEnabled)
@@ -26,10 +26,10 @@ namespace Plugins.GameBoost
         private static extern void _initializeWith(string apiKey);
 
         [DllImport("__Internal")]
-        private static extern void _sendEvent(string eventName, string jsonString);
+        private static extern void _sendEvent(string eventName, string jsonString, string deduplicateId);
 
         [DllImport("__Internal")]
         private static extern void _enableLogging(bool loggingEnabled);
     }
-#endif
 }
+#endif

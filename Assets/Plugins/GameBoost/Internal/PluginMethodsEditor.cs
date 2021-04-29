@@ -10,9 +10,11 @@ namespace Plugins.GameBoost
             GBLog.LogDebug($"Initialized with API key: {apiKey}");
         }
 
-        public void SendEvent(string eventName, string jsonString)
+        public void SendEvent(string eventName, string jsonString, string deduplicateId)
         {
-            GBLog.LogDebug($"Sending event with name <{eventName}>, params: {jsonString}");
+            GBLog.LogDebug($"Sending event with name <{eventName}>" +
+                           $", params: {jsonString}" +
+                           $", deduplicate ID: {deduplicateId}");
         }
 
         public void SetLoggingEnabled(bool isLoggingEnabled)

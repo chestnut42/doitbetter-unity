@@ -9,13 +9,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-+(void) initializeWithApiKey:(NSString * _Nonnull)apiKEY;
++ (void)initializeWithApiKey:(NSString * _Nonnull)apiKEY;
 
-+(void) send:(NSString* _Nonnull)eventName withJsonString:(NSString* _Nullable) jsonString;
++ (void)sendEventWithName:(NSString * _Nonnull)eventName
+               jsonString:(NSString * _Nullable)jsonString
+            deduplicateID:(NSString * _Nullable)deduplicateID;
 
-+(void) enableLogging:(BOOL) loggingEnabled;
++ (void)enableLogging:(BOOL) loggingEnabled;
 
-+(NSString*) version;
++ (NSString *)version;
 
 @end
 

@@ -28,7 +28,7 @@ namespace Plugins.GameBoost
         private void SendEvent(string eventName, Dictionary<string, object> eventData)
         {
             var jsonString = jsonSerializer.Serialize(eventData, false);
-            pluginMethods.SendEvent(eventName, jsonString);
+            pluginMethods.SendEvent(eventName, jsonString, null);
         }
 
 

@@ -1,14 +1,23 @@
 #import "GameBoosterSDK.h"
 
-void _initializeWith(char * apiKEY) {
-    [GameBoosterSDK initializeWithApiKey:[NSString stringWithUTF8String:apiKEY]];
+NSString * GBCreateNSStringFromUnity(const char * cStr) {
+    if (cStr != NULL) {
+        return [NSString stringWithUTF8String:cStr];
+    } else {
+        return nil;
+    }
 }
 
-void _sendEvent(char * eventName, char * jsonString) {
-    [GameBoosterSDK send: [NSString stringWithUTF8String:eventName]
-          withJsonString: [NSString stringWithUTF8String:jsonString]];
+void _initializeWith(const char * apiKEY) {
+    [GameBoosterSDK initializeWithApiKey:GBCreateNSStringFromUnity(apiKEY)];
+}
+
+void _sendEvent(const char * eventName, const char * jsonString, const char * deduplicateId) {
+    [GameBoosterSDK sendEventWithName:GBCreateNSStringFromUnity(eventName)
+                           jsonString:GBCreateNSStringFromUnity(jsonString)
+                        deduplicateID:GBCreateNSStringFromUnity(deduplicateId)];
 }
 
 void _enableLogging(bool loggingEnabled) {
-    [GameBoosterSDK enableLogging: loggingEnabled ? YES : NO];
+    [GameBoosterSDK enableLogging:loggingEnabled ? YES : NO];
 }
