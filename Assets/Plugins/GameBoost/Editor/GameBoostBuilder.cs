@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEngine;
 
 namespace Plugins.GameBoost
 {
@@ -30,9 +31,9 @@ namespace Plugins.GameBoost
 #endif
 			project.AddBuildProperty(targetId, "OTHER_LDFLAGS", "-ObjC");
 			project.WriteToFile(pbxPath);
-			GBLog.LogDebug("iOS post processor completed.");
+			Debug.Log("iOS post processor completed.");
 #else
-			GBLog.LogError("The active build target is not iOS");
+			Debug.LogError("Active build target is not iOS");
 #endif
 		}
     }

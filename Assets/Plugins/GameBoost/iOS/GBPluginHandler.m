@@ -1,7 +1,7 @@
 #import "GameBoosterSDK.h"
 
 void _initializeWith(char * apiKEY) {
-    [GameBoosterSDK initializeWith:[NSString stringWithUTF8String:apiKEY] isProduction: YES];
+    [GameBoosterSDK initializeWithApiKey:[NSString stringWithUTF8String:apiKEY]];
 }
 
 void _sendEvent(char * eventName, char * jsonString) {

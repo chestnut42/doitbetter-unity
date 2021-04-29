@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-+(void) initializeWith:(NSString* _Nonnull)apiKEY isProduction: (BOOL) isProduction;
++(void) initializeWithApiKey:(NSString * _Nonnull)apiKEY;
 
 +(void) send:(NSString* _Nonnull)eventName withJsonString:(NSString* _Nullable) jsonString;
 
