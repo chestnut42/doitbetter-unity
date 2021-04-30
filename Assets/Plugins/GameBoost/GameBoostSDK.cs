@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Plugins.GameBoost
 {
-    public partial class GameBoostSDK
+    public static partial class GameBoostSDK
     {
         private static GBImplementation gbImplementation;
         private static bool isInitialized => gbImplementation != null;

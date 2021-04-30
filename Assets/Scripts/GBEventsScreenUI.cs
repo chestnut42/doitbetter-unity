@@ -48,9 +48,8 @@ public class GBEventsScreenUI : MonoBehaviour
     public void OrangeButtonPressed()
     {
         Debug.Log("send ORANGE event");
-        CreateRoom().PlayerDied(
-            new Dictionary<string, object>{{"health", 0}},
-            new Dictionary<string, object>{{"crit_hit", 0.65}},
-            new Dictionary<string, object>{{"play_time", 12.1}});
+        GameBoostSDK.TrackPurchase(0.99, "USD");
+        GameBoostSDK.TrackPurchase(1.99, "EUR", "my_transaction_id");
+        GameBoostSDK.TrackRevenue(0.01, "BYN");
     }
 }

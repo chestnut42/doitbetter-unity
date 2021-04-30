@@ -30,7 +30,7 @@ namespace Plugins.GameBoost
         {
             if (!isInitialized)
             {
-                GBLog.LogError("SDK is already initialized. Remove a second call to Initialize");
+                GBLog.LogError("SDK is not initialized. Initialize SDK prior to calling this method");
             }
 
             return gbImplementation?.CreateArcheroRoom(
