@@ -6,8 +6,8 @@ namespace Plugins.GameBoost
 {
     public static partial class GameBoostSDK
     {
-        private static GBImplementation gbImplementation;
-        private static bool isInitialized => gbImplementation != null;
+        private static ISDKImplementation sdkImplementation;
+        private static bool isInitialized => sdkImplementation != null;
 
 
         /// <summary>
@@ -25,10 +25,19 @@ namespace Plugins.GameBoost
             if (string.IsNullOrEmpty(apiKey))
             {
                 GBLog.LogError("API Key is null or empty. Pass a valid API key");
+                return;
             }
 
-            gbImplementation = new GBImplementation(apiKey);
-            gbImplementation.SetLoggingEnabled(GBLog.LoggingEnabled);
+            try
+            {
+                sdkImplementation = new CatchingSDKImplementation(new GBImplementation(apiKey));
+                sdkImplementation.SetLoggingEnabled(GBLog.LoggingEnabled);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"Exception during Initialize: {exception}");
+                sdkImplementation = null;
+            }
         }
 
 
@@ -41,7 +50,7 @@ namespace Plugins.GameBoost
         public static void SetLoggingEnabled(bool isLoggingEnabled)
         {
             GBLog.LoggingEnabled = isLoggingEnabled;
-            gbImplementation?.SetLoggingEnabled(isLoggingEnabled);
+            sdkImplementation?.SetLoggingEnabled(isLoggingEnabled);
         }
 
 
@@ -59,7 +68,7 @@ namespace Plugins.GameBoost
                 GBLog.LogError("SDK is not initialized. Initialize SDK prior to creating an IGame");
             }
 
-            return gbImplementation?.CreateGame(balance);
+            return sdkImplementation?.CreateGame(balance);
         }
     }
 }

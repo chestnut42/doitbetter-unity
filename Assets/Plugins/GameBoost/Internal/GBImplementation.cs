@@ -3,7 +3,7 @@ using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
-    internal partial class GBImplementation : IEventTracker
+    internal partial class GBImplementation : ISDKImplementation
     {
         private readonly IJsonSerializer jsonSerializer = new JsonSerializer();
         private readonly IKeyGenerator keyGenerator = new JsonKeyGenerator(
