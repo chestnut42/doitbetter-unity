@@ -3,11 +3,14 @@ using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
-    internal partial class GBImplementation
+    internal partial class GBImplementation : IEventTracker
     {
         private readonly IJsonSerializer jsonSerializer = new JsonSerializer();
-        private readonly IHashFunction hashFunction = new SHA2Function();
-        private readonly IDataEncoder dataEncoder = new Base64DataEncoder();
+        private readonly IKeyGenerator keyGenerator = new JsonKeyGenerator(
+            new JsonSerializer(),
+            new SHA2Function(),
+            new Base64DataEncoder()
+        );
 
         private readonly IPluginMethods pluginMethods;
 
@@ -20,12 +23,11 @@ namespace Plugins.GameBoost
 
         public void SetLoggingEnabled(bool isLoggingEnabled)
         {
-            GBLog.LoggingEnabled = isLoggingEnabled;
             pluginMethods.SetLoggingEnabled(isLoggingEnabled);
         }
 
 
-        private void SendEvent(
+        public void SendEvent(
             string eventName,
             Dictionary<string, object> eventData,
             string deduplicateId = null
@@ -33,6 +35,17 @@ namespace Plugins.GameBoost
         {
             var jsonString = jsonSerializer.Serialize(eventData, false);
             pluginMethods.SendEvent(eventName, jsonString, deduplicateId);
+        }
+
+
+        public IGame CreateGame(
+            Dictionary<string, object> balance
+        )
+        {
+            return new GameInstance(
+                keyGenerator,
+                this,
+                keyGenerator.GenerateKey(balance));
         }
 
 

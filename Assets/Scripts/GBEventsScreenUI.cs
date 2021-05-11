@@ -20,12 +20,13 @@ public class GBEventsScreenUI : MonoBehaviour
         var balance = new Dictionary<string, object>();
         balance["enemy_042"] = new Dictionary<string, object> { {"health", 2000}, {"color", "green"} };
 
-        return GameBoostSDK.CreateArcheroRoom(
-            "location_1_room_2",
-            "location_1_room_0023",
-            roomDescription,
-            balance
-        );
+        return GameBoostSDK
+            .CreateGame(balance)
+            .CreateArcheroRoom(
+                "location_1_room_2",
+                "location_1_room_0023",
+                roomDescription
+            );
     }
 
     public void RedButtonPressed()

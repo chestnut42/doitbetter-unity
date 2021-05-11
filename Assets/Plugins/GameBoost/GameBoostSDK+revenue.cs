@@ -23,7 +23,7 @@ namespace Plugins.GameBoost
         {
             if (!isInitialized)
             {
-                GBLog.LogError("SDK is not initialized. Initialize SDK prior to calling this method");
+                GBLog.LogError("SDK is not initialized. Initialize SDK prior to calling TrackPurchase");
             }
 
             gbImplementation?.TrackPurchase(amount, currencyCode, transactionId);
@@ -43,7 +43,7 @@ namespace Plugins.GameBoost
         {
             if (!isInitialized)
             {
-                GBLog.LogError("SDK is not initialized. Initialize SDK prior to calling this method");
+                GBLog.LogError("SDK is not initialized. Initialize SDK prior to calling TrackRevenue");
             }
 
             gbImplementation?.TrackRevenue(amount, currencyCode);
