@@ -23,7 +23,7 @@ namespace Plugins.GameBoost
         /// <returns>
         /// An archero room instance that can be used to send events.
         /// </returns>
-        public IArcheroRoom CreateArcheroRoom(
+        IArcheroRoom CreateArcheroRoom(
             string roomNumber,
             string roomName,
             Dictionary<string, object> roomDescription
