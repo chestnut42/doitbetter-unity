@@ -11,11 +11,9 @@ If you feel a little adventurous today, do not hesitate to read through this rep
 
 ## Integration
 
-As rule of thumb you can read through **.cs** files that located in the 
-[root directory of the plugin](https://github.com/chestnut42/doitbetter-unity/tree/main/Assets/Plugins/GameBoost).
-They are well documented (if not, we highly appreciate if you create an issue).
+We highly appreciate your feedback on any issues including (and not limited or course) documentation. Event the tighniest of typo will be happily addressed by our team. 
 
-### Basic
+### Basics
 
 After you get plugin files into your project you need to add initialization call.
 ```
@@ -52,6 +50,68 @@ GameBoostSDK.TrackPurchase(1.99, "EUR", transactionId);
 ```
 GameBoostSDK.TrackRevenue(0.01, "BYN");
 ```
+
+### Game Events
+
+As the very first thing you need to send any game related event you need to create `IGame` object.
+```
+IGame game = GameBoostSDK.CreateGame(balance);
+```
+This object will create a key for the given balance object. It's recommended to create only one such object for the whole application launch. Balance object should contain all information about game balance. Therefore it tents to be very big (some megabytes) and creating a key for it can take too much time (hundreds of milliseconds) to call it inside normal game loop.
+
+#### Balance
+
+`balance` is a **Data Object** the contains **all** global game design information about the game.
+
+```
+{
+  "data": {
+    "weaponData": {/* weapon json data */},
+    "enemiesData": {/* enemies data */},
+    ... etc ...
+  }
+}
+```
+
+There's no any requirements or restrictions to a format or structure of the data in this object. However, please concider the following recommendations:
+1. Rule **number one** is: do **not** modify the data. That is, put different files, table rows, etc. in exact way as you read them. If you have some JSON file to describe your room or just a part of the room (e.g. a certain trap in the room) it's recommended to just put it to this data object **as is**
+1. Be consistent in the data structures. do **not** modify, if possible, the data object for a given room if the room didn't change. **However** if you really have changed the format of files rule **number one** takes precedence.
+1. Assume some spare levels in JSON tree for files format modifications. Even if you have only one JSON describing the room, it's recommended to put it in the first or second tree level, e.g:
+```
+{
+  "files": {
+    "mainXML": ... /* actual data from that XML */
+  }
+}
+```
+
+Later if you'll add some other file to the balance, you'll be able to
+```
+{
+  "files": {
+    "mainXML": ... /* actual data from that XML */,
+    "secondXML": ... /* actual data from second XML */
+  }
+}
+```
+
+This approach is the opposite to:
+```
+# initial JSON contains just data of the first XML:
+{
+  "startHealth": 1000,
+  "expPerLevel": 500,
+  ...
+}
+# Then you added a second XLM:
+{
+  "startHealth": 1000,
+  "expPerLevel": 500,
+  ...
+  "secondXML": ... /* actual data from second XML */
+}
+```
+In that case it's possible to have a name clash with keys in first XML and `"secondXML"` string. 
 
 ### Game Types
 

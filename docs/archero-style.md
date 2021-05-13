@@ -4,7 +4,8 @@
 
 As a starting point for all events in archero style games, you need to create a room object:
 ```
-var room = GameBoostSDK.CreateArcheroRoom(
+IGame game = /* get shared singleton instance of IGame object */;
+var room = game.CreateArcheroRoom(
   roomNumber,
   roomName,
   roomDescription,
@@ -39,34 +40,7 @@ This correlation between `roomName` and `roomDescription` can, of cource, change
 
 `roomDescription` is a **Data Object** ([section Data Object](https://github.com/chestnut42/doitbetter-unity/blob/main/README.md)) that contains **all** information about given room.
 
-There's no any requirements or restrictions to a format or structure of the data in this object. However, please concider the following recommendations:
-1. Rule **number one** is: do **not** modify the data. That is, put different files, table rows, etc. in exact way as you read them. If you have some JSON file to describe your room or just a part of the room (e.g. a certain trap in the room) it's recommended to just put it to this data object **as is**
-1. Be consistent in the data structures. do **not** modify, if possible, the data object for a given room if the room didn't change. **However** if you really have changed the format of files rule **number one** takes precedence.
-1. Assume some space for files format modifications. Even if you have only one JSON describing the room, it's recommended to put it in the first or second tree level, e.g:
-```
-{
-  "files": {
-    "mainXML": ... /* actual data from that XML */
-  }
-}
-```
-
-
-### Balance
-
-`balance` is a **Data Object** the contains **all** global game design information about the game.
-
-Same recommendation as for `roomDescription` data object are also valid for `balance`.
-
-```
-{
-  "data": {
-    "weaponData": {/* weapon json data */},
-    "enemiesData": {/* enemies data */},
-    ... etc ...
-  }
-}
-```
+Same recommendation as for `balance` data object are also valid for `roomDescription`. Those are: rarely modify its contents, avoid modifications of format and assume that some more data will be added in the future.
 
 
 ## Room object usage
