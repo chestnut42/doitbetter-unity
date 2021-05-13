@@ -24,16 +24,19 @@ namespace Plugins.GameBoost.Core
                 {
                     stringBuilder.Append("null");
                 }
-                else if (obj is IDictionary dictObject)
+                else if (obj is IDictionary)
                 {
+                    var dictObject = (IDictionary) obj;
                     WriteDictionary(dictObject, doSort);
                 }
-                else if (obj is IList listObject)
+                else if (obj is IList)
                 {
+                    var listObject = (IList) obj;
                     WriteList(listObject, doSort);
                 }
-                else if (obj is string stringObject)
+                else if (obj is string)
                 {
+                    var stringObject = (string) obj;
                     WriteString(stringObject);
                 }
                 else
@@ -106,16 +109,19 @@ namespace Plugins.GameBoost.Core
                 }
                 // We want to round-trip floating point numbers
                 // See https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#RFormatString
-                else if (obj is float flt)
+                else if (obj is float)
                 {
+                    var flt = (float) obj;
                     stringBuilder.Append(flt.ToString("G9"));
                 }
-                else if (obj is double dbl)
+                else if (obj is double)
                 {
+                    var dbl = (double) obj;
                     stringBuilder.Append(dbl.ToString("G17"));
                 }
-                else if (obj is decimal dml)
+                else if (obj is decimal)
                 {
+                    var dml = (decimal) obj;
                     stringBuilder.Append(dml.ToString("R"));
                 }
                 else
