@@ -9,9 +9,18 @@ namespace Plugins.GameBoost
         private AndroidJavaClass _ajc;
  
         private AndroidJavaClass plugin() {
-            if (_ajc == null)
+            if (_ajc == null) 
+            {
+                return _ajc;
+            }
+
+            try
             {
                 _ajc = new AndroidJavaClass("com.doitbetter.sdk.U3DGameBoosterSDK");
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"Exception during Initialize PluginMethodsAndroid: {exception}");
             }
             return _ajc;
         }   
@@ -20,7 +29,14 @@ namespace Plugins.GameBoost
         {
             if (plugin() != null)
             {
-                plugin().CallStatic("initialize", apiKey, false);
+                try
+                {
+                    plugin().CallStatic("initialize", apiKey);
+                }
+                catch (Exception exception)
+                {
+                    GBLog.LogError($"Exception during CallStatic(initialize): {exception}");
+                }
             }
         }
 
@@ -28,7 +44,14 @@ namespace Plugins.GameBoost
         {
             if (plugin() != null)
             {
-                plugin().CallStatic("sendEvent", eventName, jsonString, deduplicateId);
+                try
+                {
+                    plugin().CallStatic("sendEvent", eventName, jsonString, deduplicateId);
+                }
+                catch (Exception exception)
+                {
+                    GBLog.LogError($"Exception during CallStatic(sendEvent): {exception}");
+                }
             }            
         }
 
@@ -36,7 +59,14 @@ namespace Plugins.GameBoost
         {
             if (plugin() != null)
             {
-                plugin().CallStatic("enableLogging", isLoggingEnabled);
+               try
+                {
+                    plugin().CallStatic("enableLogging", isLoggingEnabled);
+                }
+                catch (Exception exception)
+                {
+                    GBLog.LogError($"Exception during CallStatic(enableLogging): {exception}");
+                }
             }
         }
     }
