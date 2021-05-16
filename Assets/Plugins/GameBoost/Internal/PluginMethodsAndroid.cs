@@ -8,23 +8,23 @@ namespace Plugins.GameBoost
 {
     internal class PluginMethodsAndroid : IPluginMethods
     {
-        private AndroidJavaClass _ajc;
+        private AndroidJavaClass ajc;
  
         private AndroidJavaClass plugin() {
-            if (_ajc != null) 
+            if (ajc != null) 
             {
-                return _ajc;
+                return ajc;
             }
 
             try
             {
-                _ajc = new AndroidJavaClass("com.doitbetter.sdk.u3d.U3DGameBoostSDK");
+                ajc = new AndroidJavaClass("com.doitbetter.sdk.u3d.U3DGameBoostSDK");
             }
             catch (Exception exception)
             {
                 GBLog.LogError($"Exception during Initialize PluginMethodsAndroid: {exception}");
             }
-            return _ajc;
+            return ajc;
         }   
 
         public void InitializeWith(string apiKey)
