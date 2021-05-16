@@ -1,6 +1,8 @@
 #if UNITY_ANDROID && !UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 namespace Plugins.GameBoost
 {
@@ -9,14 +11,14 @@ namespace Plugins.GameBoost
         private AndroidJavaClass _ajc;
  
         private AndroidJavaClass plugin() {
-            if (_ajc == null) 
+            if (_ajc != null) 
             {
                 return _ajc;
             }
 
             try
             {
-                _ajc = new AndroidJavaClass("com.doitbetter.sdk.U3DGameBoosterSDK");
+                _ajc = new AndroidJavaClass("com.doitbetter.sdk.u3d.U3DGameBoostSDK");
             }
             catch (Exception exception)
             {
