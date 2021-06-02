@@ -3,9 +3,9 @@
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [
+        "Android",
         "Editor",
-        "iOS",
-        "Android"
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

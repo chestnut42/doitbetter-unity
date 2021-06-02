@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
@@ -21,22 +22,6 @@ namespace Plugins.GameBoost
             catch (Exception exception)
             {
                 GBLog.LogError($"SetLoggingEnabled: {exception}");
-            }
-        }
-
-        public void SendEvent(
-            string eventName,
-            Dictionary<string, object> eventData,
-            string deduplicateId
-        )
-        {
-            try
-            {
-                wrappedSDK.SendEvent(eventName, eventData, deduplicateId);
-            }
-            catch (Exception exception)
-            {
-                GBLog.LogError($"SendEvent: {exception}");
             }
         }
 

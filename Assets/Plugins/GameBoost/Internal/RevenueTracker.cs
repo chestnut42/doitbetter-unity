@@ -2,13 +2,20 @@ using System.Collections.Generic;
 
 namespace Plugins.GameBoost
 {
-    internal partial class GBImplementation
+    internal class RevenueTracker : IRevenueTracker
     {
         private static readonly string EventKeyAmount = "amnt";
         private static readonly string EventKeyCurrency = "cur";
 
         private static readonly string EventNamePurchase = "iap";
         private static readonly string EventNameRevenue = "revenue";
+
+        private readonly IEventTracker eventTracker;
+
+        public RevenueTracker(IEventTracker eventTracker)
+        {
+            this.eventTracker = eventTracker;
+        }
 
 
         public void TrackPurchase(
@@ -20,7 +27,7 @@ namespace Plugins.GameBoost
             var param = new Dictionary<string, object>();
             param[EventKeyAmount] = amount;
             param[EventKeyCurrency] = currencyCode;
-            SendEvent(EventNamePurchase, param, transactionId);
+            eventTracker.SendEvent(EventNamePurchase, param, transactionId);
         }
 
 
@@ -32,7 +39,7 @@ namespace Plugins.GameBoost
             var param = new Dictionary<string, object>();
             param[EventKeyAmount] = amount;
             param[EventKeyCurrency] = currencyCode;
-            SendEvent(EventNameRevenue, param);
+            eventTracker.SendEvent(EventNameRevenue, param);
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Plugins.GameBoost
+namespace Plugins.GameBoost.Core
 {
     public static class GBLog
     {

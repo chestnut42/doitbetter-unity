@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
-    internal class PluginMethodsEditor : IPluginMethods
+    internal class PluginMethodsLogging : IPluginMethods
     {
         public void InitializeWith(string apiKey)
         {

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
@@ -30,7 +30,8 @@ namespace Plugins.GameBoost
 
             try
             {
-                sdkImplementation = new CatchingSDKImplementation(new GBImplementation(apiKey));
+                var internalImplementation = SDKImplementationFactory.CreateImplementation(apiKey);
+                sdkImplementation = new CatchingSDKImplementation(internalImplementation);
                 sdkImplementation.SetLoggingEnabled(GBLog.LoggingEnabled);
             }
             catch (Exception exception)

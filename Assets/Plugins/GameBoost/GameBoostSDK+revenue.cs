@@ -1,3 +1,5 @@
+using Plugins.GameBoost.Core;
+
 namespace Plugins.GameBoost
 {
     public partial class GameBoostSDK
