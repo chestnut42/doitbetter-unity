@@ -29,7 +29,7 @@ namespace Plugins.GameBoost.UnityRequest
             IWebRequestFactory webRequestFactory)
         {
             // sign up until it's not required
-            GBLog.LogDebug("Starting sign up loop");
+            GBLog.LogDebug("Starting sign up loop ...");
             for (var signUpRequest = mainController.GetSignUpRequest();
                 signUpRequest != null;
                 signUpRequest = mainController.GetSignUpRequest())
@@ -59,7 +59,7 @@ namespace Plugins.GameBoost.UnityRequest
             IWebRequestFactory webRequestFactory)
         {
             // sign in until success
-            GBLog.LogDebug("Starting sign in loop");
+            GBLog.LogDebug("Starting sign in loop ...");
             bool signedIn = false;
             while (!signedIn)
             {
@@ -87,34 +87,86 @@ namespace Plugins.GameBoost.UnityRequest
             IMainController mainController,
             IWebRequestFactory webRequestFactory)
         {
+            int x = 0;
             // send events infinitely
-            GBLog.LogDebug("Starting event loop");
+            GBLog.LogDebug("Starting event loop ...");
             while (gameObject)
             {
                 var eventRequest = mainController.GetEventRequest();
                 if (eventRequest != null)
                 {
-                    GBLog.LogDebug("Sending an event");
-
+                    x += 1;
+                    GBLog.LogDebug("Sending an event ...");
+                    var additionalString = x > 5 ? "asd" : "";
                     using (var webRequest = webRequestFactory.CreateRequestWithJson(
-                        "/1.0/events", eventRequest.json))
+                        "/1.0/events", $"{additionalString}{eventRequest.json}{additionalString}"))
                     {
                         yield return webRequest.SendWebRequest();
 
+                        // Remove event for every path.
+                        // To reduce spam in logging facility.
+                        mainController.ReportEventSuccess(eventRequest.id);
+
                         if (webRequest.result == UnityWebRequest.Result.Success)
                         {
-                            mainController.ReportEventSuccess(eventRequest.id);
-                            GBLog.LogDebug("Event sent");
+                            GBLog.LogDebug("Event has been sent");
                         }
                         else
                         {
-                            GBLog.LogError($"Error sending event: {webRequest.error}");
+                            yield return StartCoroutine(HandleEventsError(
+                                mainController,
+                                webRequestFactory,
+                                webRequest,
+                                eventRequest
+                            ));
                         }
                     }
                 }
 
                 yield return new WaitForSecondsRealtime(1.0f);
             }
+        }
+
+        private IEnumerator HandleEventsError(
+            IMainController mainController,
+            IWebRequestFactory webRequestFactory,
+            UnityWebRequest failedRequest,
+            EventRequest eventRequest)
+        {
+            if (failedRequest.result != UnityWebRequest.Result.ProtocolError)
+            {
+                GBLog.LogError($"Unknown error sending event: {failedRequest.error}");
+                yield break;
+            }
+
+            if (failedRequest.responseCode == 403)
+            {
+                GBLog.LogError($"Authorization error." +
+                               $" Please check your API key and/or application ID");
+                yield break;
+            }
+
+            if (failedRequest.responseCode == 400)
+            {
+                GBLog.LogError($"Internal protocol error. Trying to send a report ...");
+                using (var reportRequest =
+                    webRequestFactory.CreateRequestWithJson("/1.0/client-metrics/bad-request", eventRequest.json))
+                {
+                    yield return reportRequest.SendWebRequest();
+
+                    if (reportRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        GBLog.LogError($"Report has been sent. Please contact support");
+                    }
+                    else
+                    {
+                        GBLog.LogError($"Failed to send a report: {reportRequest.error}");
+                    }
+                    yield break;
+                }
+            }
+
+            GBLog.LogError($"Unknown protocol error: {failedRequest.error}");
         }
     }
 }

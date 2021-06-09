@@ -14,7 +14,7 @@ namespace Plugins.GameBoost.Core
 
         public static void LogError(object message)
         {
-            Debug.LogWarning($"Game Boost SDK [Err]: {message}");
+            Debug.LogError($"Game Boost SDK [Err]: {message}");
         }
 
         public static void LogDebug(object message)
