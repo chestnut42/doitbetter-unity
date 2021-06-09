@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Plugins.GameBoost.Core
@@ -112,17 +113,17 @@ namespace Plugins.GameBoost.Core
                 else if (obj is float)
                 {
                     var flt = (float) obj;
-                    stringBuilder.Append(flt.ToString("G9"));
+                    stringBuilder.Append(flt.ToString("R", CultureInfo.InvariantCulture));
                 }
                 else if (obj is double)
                 {
                     var dbl = (double) obj;
-                    stringBuilder.Append(dbl.ToString("G17"));
+                    stringBuilder.Append(dbl.ToString("R", CultureInfo.InvariantCulture));
                 }
                 else if (obj is decimal)
                 {
                     var dml = (decimal) obj;
-                    stringBuilder.Append(dml.ToString("R"));
+                    stringBuilder.Append(dml.ToString(CultureInfo.InvariantCulture));
                 }
                 else
                 {

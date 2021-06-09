@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using NUnit.Framework;
 using Plugins.GameBoost.Core;
 
@@ -15,7 +17,7 @@ public class JsonStringBuilderTest
     private static void TestAny<T>(T obj, string expectedString)
     {
         var result = CallBuilder(builder => builder.WriteAny(obj));
-        Assert.AreEqual(result, expectedString);
+        Assert.AreEqual(expectedString, result);
     }
 
 
@@ -24,6 +26,14 @@ public class JsonStringBuilderTest
     {
         int testNumber = 42;
         TestAny(testNumber, "42");
+    }
+
+    [Test]
+    public void TestBigInteger()
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
+        int testNumber = 42000;
+        TestAny(testNumber, "42000");
     }
 
     [Test]
@@ -44,7 +54,73 @@ public class JsonStringBuilderTest
     public void TestFloatNonBinaryFraction()
     {
         float testNumber = 42.3f;
-        TestAny(testNumber, "42.2999992");
+        TestAny(testNumber, "42.3");
+    }
+
+    [Test]
+    public void TestDoubleIntegral()
+    {
+        double testNumber = 42;
+        TestAny(testNumber, "42");
+    }
+
+    [Test]
+    public void TestDoubleBinaryFraction()
+    {
+        double testNumber = 42.5;
+        TestAny(testNumber, "42.5");
+    }
+
+    [Test]
+    public void TestDoubleNonBinaryFraction()
+    {
+        double testNumber = 42.3;
+        TestAny(testNumber, "42.3");
+    }
+
+    [Test]
+    public void TestDecimalIntegral()
+    {
+        decimal testNumber = 42;
+        TestAny(testNumber, "42");
+    }
+
+    [Test]
+    public void TestDecimalBinaryFraction()
+    {
+        decimal testNumber = 42.5m;
+        TestAny(testNumber, "42.5");
+    }
+
+    [Test]
+    public void TestDecimalNonBinaryFraction()
+    {
+        decimal testNumber = 42.3m;
+        TestAny(testNumber, "42.3");
+    }
+
+    [Test]
+    public void TestFloatIgnoresCulture()
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES", false);
+        float testNumber = 42.5f;
+        TestAny(testNumber, "42.5");
+    }
+
+    [Test]
+    public void TestDoubleIgnoresCulture()
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES", false);
+        double testNumber = 42.5;
+        TestAny(testNumber, "42.5");
+    }
+
+    [Test]
+    public void TestDecimalIgnoresCulture()
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES", false);
+        decimal testNumber = 42.5m;
+        TestAny(testNumber, "42.5");
     }
 
     [Test]
@@ -66,7 +142,7 @@ public class JsonStringBuilderTest
     }
 
     [Test]
-    public void TestWriteDictionaryDoSrotAffectsOrder()
+    public void TestWriteDictionaryDoSortAffectsOrder()
     {
         var testDictionary = new Dictionary<string, int> {{"Akey", 42}, {"Ckey", 43}, {"Bkey", 44}};
         var expectedSortedString = "{\"Akey\":42,\"Bkey\":44,\"Ckey\":43}";
