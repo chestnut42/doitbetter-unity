@@ -87,7 +87,6 @@ namespace Plugins.GameBoost.UnityRequest
             IMainController mainController,
             IWebRequestFactory webRequestFactory)
         {
-            int x = 0;
             // send events infinitely
             GBLog.LogDebug("Starting event loop ...");
             while (gameObject)
@@ -95,11 +94,9 @@ namespace Plugins.GameBoost.UnityRequest
                 var eventRequest = mainController.GetEventRequest();
                 if (eventRequest != null)
                 {
-                    x += 1;
                     GBLog.LogDebug("Sending an event ...");
-                    var additionalString = x > 5 ? "asd" : "";
                     using (var webRequest = webRequestFactory.CreateRequestWithJson(
-                        "/1.0/events", $"{additionalString}{eventRequest.json}{additionalString}"))
+                        "/1.0/events", $"{eventRequest.json}"))
                     {
                         yield return webRequest.SendWebRequest();
 
