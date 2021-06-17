@@ -1,7 +1,8 @@
 namespace Plugins.GameBoost
 {
-    internal interface ILoggingSettings
+    internal interface ISettings
     {
         void SetLoggingEnabled(bool isLoggingEnabled);
+        void MarkAsDevelopment();
     }
 }

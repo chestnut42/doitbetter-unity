@@ -25,6 +25,18 @@ namespace Plugins.GameBoost
             }
         }
 
+        public void MarkAsDevelopment()
+        {
+            try
+            {
+                wrappedSDK.MarkAsDevelopment();
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"MarkAsDevelopment: {exception}");
+            }
+        }
+
         public IGame CreateGame(Dictionary<string, object> balance)
         {
             try

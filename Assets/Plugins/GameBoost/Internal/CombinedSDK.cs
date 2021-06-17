@@ -5,17 +5,17 @@ namespace Plugins.GameBoost
     internal class CombinedSDK : ISDKImplementation
     {
         private readonly IRevenueTracker revenueTracker;
-        private readonly ILoggingSettings loggingSettings;
+        private readonly ISettings settings;
         private readonly IGameTracker gameTracker;
 
         public CombinedSDK(
             IRevenueTracker revenueTracker,
-            ILoggingSettings loggingSettings,
+            ISettings settings,
             IGameTracker gameTracker
             )
         {
             this.revenueTracker = revenueTracker;
-            this.loggingSettings = loggingSettings;
+            this.settings = settings;
             this.gameTracker = gameTracker;
         }
 
@@ -31,7 +31,12 @@ namespace Plugins.GameBoost
 
         public void SetLoggingEnabled(bool isLoggingEnabled)
         {
-            loggingSettings.SetLoggingEnabled(isLoggingEnabled);
+            settings.SetLoggingEnabled(isLoggingEnabled);
+        }
+
+        public void MarkAsDevelopment()
+        {
+            settings.MarkAsDevelopment();
         }
 
         public IGame CreateGame(Dictionary<string, object> balance)

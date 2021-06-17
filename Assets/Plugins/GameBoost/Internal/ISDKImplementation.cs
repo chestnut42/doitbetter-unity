@@ -1,6 +1,6 @@
 namespace Plugins.GameBoost
 {
-    internal interface ISDKImplementation : IRevenueTracker, ILoggingSettings, IGameTracker
+    internal interface ISDKImplementation : IRevenueTracker, ISettings, IGameTracker
     {
     }
 }

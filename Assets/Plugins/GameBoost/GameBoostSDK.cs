@@ -56,6 +56,27 @@ namespace Plugins.GameBoost
 
 
         /// <summary>
+        /// Call this method whenever you detected that this application is
+        /// a beta or development build. I.e. it's run buy developer or QA
+        /// engineer instead of real user.
+        ///
+        /// If you use #defines, flags or settings to detect development build
+        /// call this method as soon as you have detected that this
+        /// flag/setting/#define is on.
+        ///
+        /// If you use development menu (e.g. 10 taps on left top corner)
+        /// call this method as soon as this menu is open.
+        ///
+        /// It's safe to call it as many times as you need. It remembers the state
+        /// inside.
+        /// </summary>
+        public static void MarkAsDevelopment()
+        {
+            sdkImplementation?.MarkAsDevelopment();
+        }
+
+
+        /// <summary>
         /// Start with calling this function to create a game object.
         /// Game object encapsulates current balance and provides
         /// methods to create game specific event trackers.

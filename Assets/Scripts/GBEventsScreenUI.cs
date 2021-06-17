@@ -52,5 +52,6 @@ public class GBEventsScreenUI : MonoBehaviour
         GameBoostSDK.TrackPurchase(0.99, "USD");
         GameBoostSDK.TrackPurchase(1.99, "EUR", "my_transaction_id");
         GameBoostSDK.TrackRevenue(0.01, "BYN");
+        GameBoostSDK.MarkAsDevelopment();
     }
 }

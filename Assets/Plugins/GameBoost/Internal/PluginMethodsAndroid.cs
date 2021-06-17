@@ -26,6 +26,11 @@ namespace Plugins.GameBoost
         {
             androidJavaClass.CallStatic("enableLogging", isLoggingEnabled);
         }
+
+        public void MarkAsDevelopment()
+        {
+            androidJavaClass.CallStatic("markAsDevelopment");
+        }
     }
 }
 #endif

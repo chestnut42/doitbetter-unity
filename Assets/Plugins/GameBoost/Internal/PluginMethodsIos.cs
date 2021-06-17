@@ -1,5 +1,4 @@
 #if UNITY_IPHONE && !UNITY_EDITOR
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Plugins.GameBoost
@@ -19,6 +18,11 @@ namespace Plugins.GameBoost
         public void SetLoggingEnabled(bool isLoggingEnabled)
         {
             _enableLogging(isLoggingEnabled);
+        }
+
+        public void MarkAsDevelopment()
+        {
+            // nothing to do -> iOS SDK can detect sandbox
         }
 
 

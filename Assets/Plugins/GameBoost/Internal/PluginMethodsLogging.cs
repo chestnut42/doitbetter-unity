@@ -20,5 +20,10 @@ namespace Plugins.GameBoost
         {
             GBLog.LogDebug($"Setting logging enabled to: {isLoggingEnabled}");
         }
+
+        public void MarkAsDevelopment()
+        {
+            GBLog.LogDebug($"Mark as development called");
+        }
     }
 }

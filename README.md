@@ -33,6 +33,19 @@ If you're about to ask some help, please run your game with this line on and att
 GameBoostSDK.SetLoggingEnabled(true);
 ```
 
+### Development build
+
+If you use #defines, flags or settings to detect development build call the following method as soon as you have detected that this flag, setting or #define is on.
+
+```
+GameBoostSDK.MarkAsDevelopment();
+```
+
+If you use development menu (e.g. 10 taps on left top corner) call this method as soon as this menu is open.
+
+**Note:** It's safe to call it as many times as you need. It remembers the state inside and converts any subsequent calls after the first one to NoOp 
+
+
 ### Purchase Tracking
 
 SDK provides API to track revenue. SDK splits revenue into two big categories: in-app purchases and everything else. Everything else here is usually just ad clicks or views.
