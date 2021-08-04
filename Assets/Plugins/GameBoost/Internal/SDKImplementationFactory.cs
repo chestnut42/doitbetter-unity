@@ -9,11 +9,11 @@ namespace Plugins.GameBoost
 {
     internal static class SDKImplementationFactory
     {
-        public static ISDKImplementation CreateImplementation(string apiKey)
+        public static ISDKImplementation CreateImplementation(string apiKey, GameBoostEvents events)
         {
-            var pluginMethods = CreatePluginMethods();
+            var pluginMethods = CreatePluginMethods(events);
             pluginMethods.InitializeWith(apiKey);
-
+            
             var jsonSerializer = new JsonSerializer();
             var pluginEventTracker = new PluginEventTracker(jsonSerializer, pluginMethods);
             var revenueTracker = new RevenueTracker(pluginEventTracker);
@@ -35,17 +35,17 @@ namespace Plugins.GameBoost
             return new CombinedSDK(revenueTracker, pluginMethods, gameTracker);
         }
 
-        private static IPluginMethods CreatePluginMethods()
+        private static IPluginMethods CreatePluginMethods(GameBoostEvents events)
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
-            return new PluginMethodsIos();
+            return new PluginMethodsIos(events);
 #elif UNITY_ANDROID && !UNITY_EDITOR
-            return new PluginMethodsAndroid();
+            return new PluginMethodsAndroid(events);
 #else
-            return new PluginMethodsLogging();
+            return new PluginMethodsLogging(events);
 #endif
         }
-
+        
 #if UNITY_EDITOR
         // This translation is necessary as UnityRequest assembly can't depend
         // on this assembly. Because this assembly already references

@@ -10,6 +10,7 @@ public class GBEventsScreenUI : MonoBehaviour
     {
         GameBoostSDK.SetLoggingEnabled(true);
         GameBoostSDK.Initialize(APIKey);
+        GameBoostSDK.Events.sandboxStatus += delegate(SandboxStatus status) { Debug.Log($"sandboxStatus == {status} "); };
     }
 
     public IArcheroRoom CreateRoom()

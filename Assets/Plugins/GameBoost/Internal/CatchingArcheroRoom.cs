@@ -27,6 +27,21 @@ namespace Plugins.GameBoost
             }
         }
 
+        public void EmeniesKilled(
+            Dictionary<string, object> playerState,
+            Dictionary<string, object> dynamicBalance,
+            Dictionary<string, object> roomPlayData)
+        {
+            try
+            {
+                wrappedRoom.EmeniesKilled(playerState, dynamicBalance, roomPlayData);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"EmeniesKilled: {exception}");
+            }
+        }        
+
         public void Finished(
             Dictionary<string, object> playerState,
             Dictionary<string, object> dynamicBalance,

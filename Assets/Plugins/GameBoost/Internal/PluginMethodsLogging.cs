@@ -4,6 +4,10 @@ namespace Plugins.GameBoost
 {
     internal class PluginMethodsLogging : IPluginMethods
     {
+
+        public PluginMethodsLogging(GameBoostEvents events)
+        { }
+
         public void InitializeWith(string apiKey)
         {
             GBLog.LogDebug($"Initialized with API key: {apiKey}");

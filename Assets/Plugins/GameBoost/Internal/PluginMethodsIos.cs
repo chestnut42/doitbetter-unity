@@ -5,6 +5,13 @@ namespace Plugins.GameBoost
 {
     internal class PluginMethodsIos : IPluginMethods
     {
+        private GameBoostEventsiOs iOsEvents;
+s
+        public PluginMethodsIos(GameBoostEvents events)
+        {
+            iOsEvents = new GameBoostEventsiOs(events);
+        }
+
         public void InitializeWith(string apiKey)
         {
             _initializeWith(apiKey);
@@ -34,6 +41,18 @@ namespace Plugins.GameBoost
 
         [DllImport("__Internal")]
         private static extern void _enableLogging(bool loggingEnabled);
+    }
+
+    class GameBoostEventsiOs: IGameBoostEvents
+    {
+        GameBoostEvents events;
+        public GameBoostEventsiOs(GameBoostEvents events) {
+            this.events = events;
+        }
+
+        void busMessage(String type, String content) {
+            
+        }
     }
 }
 #endif
