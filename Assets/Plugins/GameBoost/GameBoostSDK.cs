@@ -6,7 +6,7 @@ namespace Plugins.GameBoost
 {
     public static partial class GameBoostSDK
     {
-        internal static GameBoostEvents events { get; } = new GameBoostEvents();
+        private static GameBoostEvents events = new GameBoostEvents();
         private static ISDKImplementation sdkImplementation;
         private static bool isInitialized => sdkImplementation != null;
         
@@ -41,10 +41,7 @@ namespace Plugins.GameBoost
             }
         }
 
-        public static IGameBoostEvents Events
-        {
-            get { return events; }
-        }
+        public static IGameBoostEvents Events => events; 
         
         /// <summary>
         /// Set's verbose logging mode.

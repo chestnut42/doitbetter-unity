@@ -39,7 +39,7 @@ namespace Plugins.GameBoost
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
             return new PluginMethodsIos(events);
-#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID
             return new PluginMethodsAndroid(events);
 #else
             return new PluginMethodsLogging(events);

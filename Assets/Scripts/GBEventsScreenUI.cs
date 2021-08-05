@@ -5,12 +5,17 @@ using Plugins.GameBoost;
 public class GBEventsScreenUI : MonoBehaviour
 {
     public string APIKey;
-
+    public UnityEngine.UI.Text OutputText;
+    
     private void Awake()
     {
-        GameBoostSDK.SetLoggingEnabled(true);
+        GameBoostSDK.Events.sandboxStatus += (status) =>
+        {
+            OutputText.text = status.ToString();
+            Debug.Log($"sandboxStatus == {status} ");
+        };
         GameBoostSDK.Initialize(APIKey);
-        GameBoostSDK.Events.sandboxStatus += delegate(SandboxStatus status) { Debug.Log($"sandboxStatus == {status} "); };
+        GameBoostSDK.SetLoggingEnabled(true);
     }
 
     public IArcheroRoom CreateRoom()

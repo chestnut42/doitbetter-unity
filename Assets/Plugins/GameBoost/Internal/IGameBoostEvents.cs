@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
@@ -28,9 +29,11 @@ namespace Plugins.GameBoost
     {
         public event IGameBoostEvents.SandboxStatusHandler sandboxStatus;
 
-        internal void post(SandboxStatus status)
+        internal void Post(SandboxStatus status)
         {
-            sandboxStatus?.Invoke(status);
+            var handler = sandboxStatus;
+            GBLog.LogError($"handler.GetInvocationList().Length = {handler?.GetInvocationList().Length}");
+            handler?.Invoke(status);
         }
         
         //TODO: add new events here
