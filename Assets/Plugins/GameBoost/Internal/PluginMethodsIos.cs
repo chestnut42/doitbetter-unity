@@ -71,4 +71,3 @@ namespace Plugins.GameBoost
     }
 }
 #endif
-// static extern void RegisterCallback(MyFuncType func);
