@@ -25,17 +25,9 @@ namespace Plugins.GameBoost
         //TODO: add new events here
     }
     
-    internal class GameBoostEvents: IGameBoostEvents
+    public interface IGameBoostEventsBus
     {
-        public event IGameBoostEvents.SandboxStatusHandler sandboxStatus;
-
-        internal void Post(SandboxStatus status)
-        {
-            var handler = sandboxStatus;
-            GBLog.LogError($"handler.GetInvocationList().Length = {handler?.GetInvocationList().Length}");
-            handler?.Invoke(status);
-        }
-        
-        //TODO: add new events here
-    }    
+        void receiveBusMessage(string type, string content);
+    }
+    
 }

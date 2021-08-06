@@ -8,8 +8,8 @@ NSString * GBCreateNSStringFromUnity(const char * cStr) {
     }
 }
 
-void _initializeWith(const char * apiKEY) {
-    [GameBoosterSDK initializeWithApiKey:GBCreateNSStringFromUnity(apiKEY)];
+void _initializeWith(const char * apiKEY, MessageBusCallback busCallback) {
+    [GameBoosterSDK initializeWithApiKey:GBCreateNSStringFromUnity(apiKEY) messageBus: busCallback];
 }
 
 void _sendEvent(const char * eventName, const char * jsonString, const char * deduplicateId) {

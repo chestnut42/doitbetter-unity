@@ -1,6 +1,6 @@
 // #if UNITY_ANDROID && !UNITY_EDITOR
 #if UNITY_ANDROID
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Plugins.GameBoost.Core;
 
@@ -40,44 +40,22 @@ namespace Plugins.GameBoost
 
     class GameBoostEventsAndroid : AndroidJavaProxy
     {
-        private const string SANDBOX_STATUS = "SANDBOX_STATUS";
-        private GameBoostEvents events;
+        private IGameBoostEventsBus eventsBus;
 
-        public GameBoostEventsAndroid(GameBoostEvents events) : base("com.doitbetter.sdk.u3d.UnityInputCallback") {
-            this.events = events;
+        public GameBoostEventsAndroid(IGameBoostEventsBus eventsBus) : base("com.doitbetter.sdk.outbus.OutMessageBus") {
+            this.eventsBus = eventsBus;
         }
 
         void busMessage(string type, string content) {
-            switch (type)
+            try
             {
-                case SANDBOX_STATUS:
-                    ReceiveStatus(content);
-                    break;
-                default:
-                    GBLog.LogError($"busMessage recieve unsupported type == {type}");
-                    break;
+                eventsBus.receiveBusMessage(type, content);
             }
-        }
-
-        private void ReceiveStatus(string value)
-        {
-            var mapping = new Dictionary<string, SandboxStatus>()
+            catch (Exception ex) 
             {
-                {"ukwn", SandboxStatus.Unknown},
-                {"sdbx", SandboxStatus.Sandbox},
-                {"prod", SandboxStatus.Production}
-            };
-
-            if (mapping.ContainsKey(value))
-            {
-                events.Post(mapping[value]);    
-            }
-            else
-            {
-                GBLog.LogError($"SandboxStatus receive unsupported type == {value}");                
+                GBLog.LogError($"receiveBusMessage  ex: {ex.Message} for type: {type}");
             }
         }
     }
-
 }
 #endif

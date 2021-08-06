@@ -3,13 +3,18 @@
 
 #import <Foundation/Foundation.h>
 
+extern "C" {
+    typedef void (*MessageBusCallback)(const char *, const char *);
+}
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GameBoosterSDK : NSObject
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-+ (void)initializeWithApiKey:(NSString * _Nonnull)apiKEY;
++ (void)initializeWithApiKey:(NSString * _Nonnull)apiKEY 
+                  messageBus:(MessageBusCallback) messageBusCallback;
 
 + (void)sendEventWithName:(NSString * _Nonnull)eventName
                jsonString:(NSString * _Nullable)jsonString
