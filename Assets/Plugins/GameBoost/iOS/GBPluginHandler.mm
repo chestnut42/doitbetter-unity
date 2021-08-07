@@ -9,10 +9,8 @@ NSString * GBCreateNSStringFromUnity(const char * cStr) {
     }
 }
 
-static MessageBusBlock messageBusBlockWrapper = ^void (NSString * _Nonnull type, NSString * _Nonnull content) {};
-
 void _initializeWith(const char * apiKEY, MessageBusCallback busCallback) {
-    messageBusBlockWrapper = ^void (NSString * _Nonnull type, NSString * _Nonnull content) {
+    MessageBusBlock messageBusBlockWrapper = ^void (NSString * _Nonnull type, NSString * _Nonnull content) {
         busCallback([type cStringUsingEncoding:NSUTF8StringEncoding], [content cStringUsingEncoding:NSUTF8StringEncoding]);
     };
 
