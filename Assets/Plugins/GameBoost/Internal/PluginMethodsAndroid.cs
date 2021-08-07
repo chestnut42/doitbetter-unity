@@ -11,7 +11,7 @@ namespace Plugins.GameBoost
         private AndroidJavaClass androidJavaClass;
         private GameBoostEventsAndroid gbEvents;
 
-        public PluginMethodsAndroid(GameBoostEvents events)
+        public PluginMethodsAndroid(IGameBoostEventsBus events)
         {
             gbEvents = new GameBoostEventsAndroid(events);
             androidJavaClass = new AndroidJavaClass("com.doitbetter.sdk.u3d.U3DGameBoostSDK");

@@ -5,7 +5,7 @@ namespace Plugins.GameBoost
     internal class PluginMethodsLogging : IPluginMethods
     {
 
-        public PluginMethodsLogging(GameBoostEvents events)
+        public PluginMethodsLogging(IGameBoostEventsBus events)
         { }
 
         public void InitializeWith(string apiKey)

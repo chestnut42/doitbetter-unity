@@ -13,7 +13,7 @@ namespace Plugins.GameBoost
         private static readonly string EventKeyRoomPlayData = "pl_data";
 
         private static readonly string EventNameStarted = "room_started";
-        private static readonly string EventEmeniesKilled = "emenies_killed";
+        private static readonly string EventEnemiesKilled = "enemies_killed";
         private static readonly string EventNameFinished = "room_finished";
         private static readonly string EventNamePlayerDied = "pl_died";
         private static readonly string EventNamePlayerResurrected = "pl_re";
@@ -68,7 +68,7 @@ namespace Plugins.GameBoost
             eventData[EventKeyPlayerState] = playerState;
             eventData[EventKeyDynamicBalance] = dynamicBalance;
             eventData[EventKeyRoomPlayData] = roomPlayData;
-            eventTracker.SendEvent(EventEmeniesKilled, eventData);
+            eventTracker.SendEvent(EventEnemiesKilled, eventData);
         }
 
         public void Finished(

@@ -11,7 +11,7 @@ namespace Plugins.GameBoost
     {
         private GameBoostEventsiOs iOsEvents;
 
-        public PluginMethodsIos(GameBoostEvents events)
+        public PluginMethodsIos(IGameBoostEventsBus events)
         {
             iOsEvents = new GameBoostEventsiOs(events);
         }
