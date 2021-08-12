@@ -46,6 +46,29 @@ If you use development menu (e.g. 10 taps on left top corner) call this method a
 **Note:** It's safe to call it as many times as you need. It remembers the state inside and converts any subsequent calls after the first one to NoOp 
 
 
+### Sandbox environment tracking
+
+SDK is trying to determine if the app running is a development build.
+I.e. a build which is run by a developer or a QA specialist.
+Although this kind of detection can't be done with 100% accuracy, the SDK does its
+best to achieve the result.
+
+If you're interested in this value you can subscribe to an event
+that is fired when the SDK updates the value.
+
+```
+GameBoostSDK.Events.sandboxStatus += OnSandboxStatus;
+```
+
+**Be aware**:
+* Detection could involve network calls. In that case
+  the event could be called at any point after the app launch.
+* Detection could happen several times per application launch.
+  Expect the event could be fired multiple times as well.
+* Consider subscribing to event **before** calling `Initialize`. Some platforms
+  fire the event during initialization.
+
+
 ### Purchase Tracking
 
 SDK provides API to track revenue. SDK splits revenue into two big categories: in-app purchases and everything else. Everything else here is usually just ad clicks or views.

@@ -54,11 +54,12 @@ In other words, room object serves caching purposes **only**. It does **not** co
 
 ## Events
 
-* Started
-* Finished - the room finished, i.e. the player has won
-* PlayerDied
-* PlayerResurrected
-* PlayerChoseAbility
+* **Started**
+* **EnemiesKilled** - the enemies are killed in the room, but the player hasn't yet entered the gates
+* **Finished** - the room finished, i.e. the player has won
+* **PlayerDied**
+* **PlayerResurrected**
+* **PlayerChoseAbility**
 
 
 ## Event Parameters
