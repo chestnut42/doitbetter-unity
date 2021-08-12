@@ -59,7 +59,7 @@ namespace Plugins.GameBoost
             eventTracker.SendEvent(EventNameStarted, eventData);
         }
 
-        public void EmeniesKilled(
+        public void EnemiesKilled(
             Dictionary<string, object> playerState,
             Dictionary<string, object> dynamicBalance,
             Dictionary<string, object> roomPlayData)

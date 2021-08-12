@@ -1,6 +1,4 @@
-// #if UNITY_IPHONE && !UNITY_EDITOR
-#if UNITY_IPHONE
-
+#if UNITY_IPHONE && !UNITY_EDITOR
 using System;
 using System.Runtime.InteropServices;
 using Plugins.GameBoost.Core;
@@ -35,7 +33,7 @@ namespace Plugins.GameBoost
         {
             // nothing to do -> iOS SDK can detect sandbox
         }
-        
+
         [DllImport("__Internal")]
         private static extern void _initializeWith(string apiKey, GameBoostEventsiOs.BusMessageType busMethod);
 
@@ -49,8 +47,9 @@ namespace Plugins.GameBoost
     class GameBoostEventsiOs
     {
         private static IGameBoostEventsBus eventsBus;
-        
-        public GameBoostEventsiOs(IGameBoostEventsBus eventsBus) {
+
+        public GameBoostEventsiOs(IGameBoostEventsBus eventsBus)
+        {
             GameBoostEventsiOs.eventsBus = eventsBus;
         }
 
@@ -63,10 +62,10 @@ namespace Plugins.GameBoost
              {
                  eventsBus.receiveBusMessage(type, content);
              }
-             catch (Exception ex) 
+             catch (Exception ex)
              {
                  GBLog.LogError($"receiveBusMessage  ex: {ex.Message} for type: {type}");
-             }        
+             }
         }
     }
 }

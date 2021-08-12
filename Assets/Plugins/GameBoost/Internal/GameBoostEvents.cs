@@ -6,36 +6,30 @@ namespace Plugins.GameBoost
     internal class GameBoostEvents: IGameBoostEvents, IGameBoostEventsBus
     {
         private const string SANDBOX_STATUS = "SANDBOX_STATUS";
-        
-        // IGameBoostEvents
-        public event IGameBoostEvents.SandboxStatusHandler sandboxStatus;
 
-        internal void Post(SandboxStatus status)
+
+        #region IGameBoostEvents
+        public event IGameBoostEvents.SandboxStatusHandler sandboxStatus;
+        #endregion
+
+
+        #region IGameBoostEventsBus
+        public void receiveBusMessage(string type, string content)
         {
-            var handler = sandboxStatus;
-            handler?.Invoke(status);
-        }
-        
-        /*
-         * TODO: add new events here
-         */
-        
-        // IGameBoostEventsBus
-        public void receiveBusMessage(string type, string content) {
             switch (type)
             {
                 case SANDBOX_STATUS:
                     ReceiveStatus(content);
                     break;
                 default:
-                    GBLog.LogError($"busMessage recieve unsupported type == {type}");
+                    GBLog.LogError($"busMessage received unsupported type == {type}");
                     break;
             }
         }
 
         private void ReceiveStatus(string value)
         {
-            var mapping = new Dictionary<string, SandboxStatus>()
+            var mapping = new Dictionary<string, SandboxStatus>
             {
                 {"ukwn", SandboxStatus.Unknown},
                 {"sdbx", SandboxStatus.Sandbox},
@@ -44,12 +38,13 @@ namespace Plugins.GameBoost
 
             if (mapping.ContainsKey(value))
             {
-                Post(mapping[value]);    
+                sandboxStatus?.Invoke(mapping[value]);
             }
             else
             {
-                GBLog.LogError($"SandboxStatus receive unsupported type == {value}");                
+                GBLog.LogError($"SandboxStatus receive unsupported type == {value}");
             }
-        }        
+        }
+        #endregion
     }
 }

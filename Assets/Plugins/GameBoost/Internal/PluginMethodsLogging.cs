@@ -4,9 +4,12 @@ namespace Plugins.GameBoost
 {
     internal class PluginMethodsLogging : IPluginMethods
     {
+        private readonly IGameBoostEventsBus eventsBus;
 
-        public PluginMethodsLogging(IGameBoostEventsBus events)
-        { }
+        public PluginMethodsLogging(IGameBoostEventsBus eventsBus)
+        {
+            this.eventsBus = eventsBus;
+        }
 
         public void InitializeWith(string apiKey)
         {
@@ -28,6 +31,7 @@ namespace Plugins.GameBoost
         public void MarkAsDevelopment()
         {
             GBLog.LogDebug($"Mark as development called");
+            eventsBus.receiveBusMessage("SANDBOX_STATUS", "sdbx");
         }
     }
 }

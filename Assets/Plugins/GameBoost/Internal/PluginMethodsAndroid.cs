@@ -1,5 +1,4 @@
-// #if UNITY_ANDROID && !UNITY_EDITOR
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 using System;
 using UnityEngine;
 using Plugins.GameBoost.Core;
@@ -42,16 +41,19 @@ namespace Plugins.GameBoost
     {
         private IGameBoostEventsBus eventsBus;
 
-        public GameBoostEventsAndroid(IGameBoostEventsBus eventsBus) : base("com.doitbetter.sdk.outbus.OutMessageBus") {
+        public GameBoostEventsAndroid(IGameBoostEventsBus eventsBus)
+            : base("com.doitbetter.sdk.outbus.OutMessageBus")
+        {
             this.eventsBus = eventsBus;
         }
 
-        void busMessage(string type, string content) {
+        void busMessage(string type, string content)
+        {
             try
             {
                 eventsBus.receiveBusMessage(type, content);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 GBLog.LogError($"receiveBusMessage  ex: {ex.Message} for type: {type}");
             }

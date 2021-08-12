@@ -7,5 +7,4 @@ namespace Plugins.GameBoost
     {
         void receiveBusMessage(string type, string content);
     }
-    
 }

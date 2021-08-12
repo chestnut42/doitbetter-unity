@@ -17,8 +17,13 @@ namespace Plugins.GameBoost
     {
         public delegate void SandboxStatusHandler(SandboxStatus status);
 
+        /// <summary>
+        /// <c>sandboxStatus</c> is fired when the SDK detects if the app
+        /// is running in a sandbox environment.
+        /// </summary>
+        /// <remarks>
+        /// Could be fired several times per app launch.
+        /// </remarks>
         public event SandboxStatusHandler sandboxStatus;
-
-        //TODO: add new events here
     }
 }

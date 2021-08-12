@@ -13,7 +13,7 @@ namespace Plugins.GameBoost
         {
             var pluginMethods = CreatePluginMethods(events);
             pluginMethods.InitializeWith(apiKey);
-            
+
             var jsonSerializer = new JsonSerializer();
             var pluginEventTracker = new PluginEventTracker(jsonSerializer, pluginMethods);
             var revenueTracker = new RevenueTracker(pluginEventTracker);
@@ -39,13 +39,13 @@ namespace Plugins.GameBoost
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
             return new PluginMethodsIos(events);
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID && !UNITY_EDITOR
             return new PluginMethodsAndroid(events);
 #else
             return new PluginMethodsLogging(events);
 #endif
         }
-        
+
 #if UNITY_EDITOR
         // This translation is necessary as UnityRequest assembly can't depend
         // on this assembly. Because this assembly already references

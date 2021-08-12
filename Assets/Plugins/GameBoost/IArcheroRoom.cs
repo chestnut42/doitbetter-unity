@@ -15,16 +15,16 @@ namespace Plugins.GameBoost
             Dictionary<string, object> playerState,
             Dictionary<string, object> dynamicBalance);
 
-        
+
         /// <summary>
-        /// Sends an event killed emenies
+        /// Sends an event killed enemies
         /// Please refer to the manual for detailed description
         /// on each function argument.
         /// </summary>
         /// <param name="playerState">All current player parameters</param>
         /// <param name="dynamicBalance">Dynamic balance values being used to this room launch</param>
         /// <param name="roomPlayData">Data that shows how good/fast the user finished this room</param>
-        void EmeniesKilled(
+        void EnemiesKilled(
             Dictionary<string, object> playerState,
             Dictionary<string, object> dynamicBalance,
             Dictionary<string, object> roomPlayData);
