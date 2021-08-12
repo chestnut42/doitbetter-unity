@@ -6,8 +6,10 @@ namespace Plugins.GameBoost
 {
     public static partial class GameBoostSDK
     {
+        private static readonly GameBoostEvents events = new GameBoostEvents();
         private static ISDKImplementation sdkImplementation;
         private static bool isInitialized => sdkImplementation != null;
+        private static bool markedAsDevelopment;
 
 
         /// <summary>
@@ -30,9 +32,13 @@ namespace Plugins.GameBoost
 
             try
             {
-                var internalImplementation = SDKImplementationFactory.CreateImplementation(apiKey);
+                var internalImplementation = SDKImplementationFactory.CreateImplementation(apiKey, events);
                 sdkImplementation = new CatchingSDKImplementation(internalImplementation);
                 sdkImplementation.SetLoggingEnabled(GBLog.LoggingEnabled);
+                if (markedAsDevelopment)
+                {
+                    sdkImplementation.MarkAsDevelopment();
+                }
             }
             catch (Exception exception)
             {
@@ -41,6 +47,11 @@ namespace Plugins.GameBoost
             }
         }
 
+        /// <summary>
+        /// Use this object to subscribe to events
+        /// emitted by SDK
+        /// </summary>
+        public static IGameBoostEvents Events => events;
 
         /// <summary>
         /// Set's verbose logging mode.
@@ -72,6 +83,7 @@ namespace Plugins.GameBoost
         /// </summary>
         public static void MarkAsDevelopment()
         {
+            markedAsDevelopment = true;
             sdkImplementation?.MarkAsDevelopment();
         }
 

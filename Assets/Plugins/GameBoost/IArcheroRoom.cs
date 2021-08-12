@@ -17,6 +17,19 @@ namespace Plugins.GameBoost
 
 
         /// <summary>
+        /// Sends an event killed enemies
+        /// Please refer to the manual for detailed description
+        /// on each function argument.
+        /// </summary>
+        /// <param name="playerState">All current player parameters</param>
+        /// <param name="dynamicBalance">Dynamic balance values being used to this room launch</param>
+        /// <param name="roomPlayData">Data that shows how good/fast the user finished this room</param>
+        void EnemiesKilled(
+            Dictionary<string, object> playerState,
+            Dictionary<string, object> dynamicBalance,
+            Dictionary<string, object> roomPlayData);
+
+        /// <summary>
         /// Sends an event that the room has finished, i.e. player
         /// has won.
         /// Please refer to the manual for detailed description

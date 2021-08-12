@@ -9,9 +9,9 @@ namespace Plugins.GameBoost
 {
     internal static class SDKImplementationFactory
     {
-        public static ISDKImplementation CreateImplementation(string apiKey)
+        public static ISDKImplementation CreateImplementation(string apiKey, IGameBoostEventsBus events)
         {
-            var pluginMethods = CreatePluginMethods();
+            var pluginMethods = CreatePluginMethods(events);
             pluginMethods.InitializeWith(apiKey);
 
             var jsonSerializer = new JsonSerializer();
@@ -35,14 +35,14 @@ namespace Plugins.GameBoost
             return new CombinedSDK(revenueTracker, pluginMethods, gameTracker);
         }
 
-        private static IPluginMethods CreatePluginMethods()
+        private static IPluginMethods CreatePluginMethods(IGameBoostEventsBus events)
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
-            return new PluginMethodsIos();
+            return new PluginMethodsIos(events);
 #elif UNITY_ANDROID && !UNITY_EDITOR
-            return new PluginMethodsAndroid();
+            return new PluginMethodsAndroid(events);
 #else
-            return new PluginMethodsLogging();
+            return new PluginMethodsLogging(events);
 #endif
         }
 
