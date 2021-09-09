@@ -68,14 +68,33 @@ namespace Plugins.GameBoost
         }
 
 
-        public void TrackRevenue(
+        public void TrackLocalPurchase(
             double amount,
-            string currencyCode
+            string currencyCode,
+            string source,
+            Dictionary<string, object> info
         )
         {
             try
             {
-                wrappedSDK.TrackRevenue(amount, currencyCode);
+                wrappedSDK.TrackLocalPurchase(amount, currencyCode, source, info);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"TrackPurchase: {exception}");
+            }
+        }
+
+
+        public void TrackRevenue(
+            double amount,
+            string currencyCode,
+            string source
+        )
+        {
+            try
+            {
+                wrappedSDK.TrackRevenue(amount, currencyCode, source);
             }
             catch (Exception exception)
             {

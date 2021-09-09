@@ -24,9 +24,15 @@ namespace Plugins.GameBoost
             revenueTracker.TrackPurchase(amount, currencyCode, transactionId);
         }
 
-        public void TrackRevenue(double amount, string currencyCode)
+        public void TrackLocalPurchase(double amount, string currencyCode, string source,
+            Dictionary<string, object> info)
         {
-            revenueTracker.TrackRevenue(amount, currencyCode);
+            revenueTracker.TrackLocalPurchase(amount, currencyCode, source, info);
+        }
+
+        public void TrackRevenue(double amount, string currencyCode, string source)
+        {
+            revenueTracker.TrackRevenue(amount, currencyCode, source);
         }
 
         public void SetLoggingEnabled(bool isLoggingEnabled)

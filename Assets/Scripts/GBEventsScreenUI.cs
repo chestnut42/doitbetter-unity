@@ -57,7 +57,7 @@ public class GBEventsScreenUI : MonoBehaviour
         Debug.Log("send ORANGE event");
         GameBoostSDK.TrackPurchase(0.99, "USD");
         GameBoostSDK.TrackPurchase(1.99, "EUR", "my_transaction_id");
-        GameBoostSDK.TrackRevenue(0.01, "BYN");
+        GameBoostSDK.TrackRevenue(0.01, "BYN", source: "ad");
         GameBoostSDK.MarkAsDevelopment();
     }
 }
