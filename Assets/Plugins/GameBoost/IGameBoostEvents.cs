@@ -16,6 +16,7 @@ namespace Plugins.GameBoost
     public interface IGameBoostEvents
     {
         public delegate void SandboxStatusHandler(SandboxStatus status);
+        public delegate void BooleanStatusHandler(Boolean status);        
 
         /// <summary>
         /// <c>sandboxStatus</c> is fired when the SDK detects if the app
@@ -25,5 +26,6 @@ namespace Plugins.GameBoost
         /// Could be fired several times per app launch.
         /// </remarks>
         public event SandboxStatusHandler sandboxStatus;
+        public event BooleanStatusHandler boostEnabledStatus;
     }
 }

@@ -15,6 +15,13 @@ public class GBEventsScreenUI : MonoBehaviour
             OutputText.text = status.ToString();
             Debug.Log($"sandboxStatus == {status} ");
         };
+        
+        GameBoostSDK.Events.boostEnabledStatus += status =>
+        {
+            OutputText.text = status.ToString();
+            Debug.Log($"boostEnabledStatus == {status} ");
+        };
+
         GameBoostSDK.Initialize(APIKey);
     }
 
