@@ -38,9 +38,9 @@ namespace Plugins.GameBoost
         private static IPluginMethods CreatePluginMethods(IGameBoostEventsBus events)
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
-            return new PluginMethodsIos(events);
+            return new iOs.PluginMethods(events);
 #elif UNITY_ANDROID && !UNITY_EDITOR
-            return new PluginMethodsAndroid(events);
+            return new Android.PluginMethods(events);
 #else
             return new PluginMethodsLogging(events);
 #endif

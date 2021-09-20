@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using Plugins.GameBoost.BusData;
 using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
@@ -23,6 +26,18 @@ namespace Plugins.GameBoost
                            $", deduplicate ID: {deduplicateId}");
         }
 
+        public IEnumerator Level(string room_number, Action<LevelData> callMethod)
+        {
+            GBLog.LogDebug($"RawLevel room_number <{room_number}>");
+            yield return null;
+        }
+
+        public IEnumerator Abilities(string reason, string room_number, Action<AbilitiesData> callMethod)
+        {
+            GBLog.LogDebug($"RawAbilities room_number <{room_number}>, reason <{reason}>");
+            yield return null;
+        }
+        
         public void SetLoggingEnabled(bool isLoggingEnabled)
         {
             GBLog.LogDebug($"Setting logging enabled to: {isLoggingEnabled}");
