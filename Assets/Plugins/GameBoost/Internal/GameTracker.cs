@@ -5,19 +5,22 @@ namespace Plugins.GameBoost
 {
     internal class GameTracker : IGameTracker
     {
-        private readonly IKeyGenerator keyGenerator = new JsonKeyGenerator(
-            new JsonSerializer(),
-            new SHA2Function(),
-            new Base64DataEncoder()
-        );
+        private IKeyGenerator keyGenerator;
 
         private readonly IEventTracker eventTracker;
 
         public GameTracker(
-            IEventTracker eventTracker
+            IEventTracker eventTracker,
+            IKeyHashStorage keyHashStorage
         )
         {
             this.eventTracker = eventTracker;
+            this.keyGenerator = new JsonKeyGenerator(
+                new JsonSerializer(),
+                new SHA2Function(),
+                new Base64DataEncoder(),
+                keyHashStorage
+            );
         }
 
 
@@ -28,7 +31,7 @@ namespace Plugins.GameBoost
             return new GameInstance(
                 keyGenerator,
                 eventTracker,
-                keyGenerator.GenerateKey(balance));
+                keyGenerator.GenerateKey(balance, KeyHashType.Balance));
         }
     }
 }

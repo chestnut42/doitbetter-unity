@@ -37,7 +37,18 @@ namespace Plugins.GameBoost
             GBLog.LogDebug($"RawAbilities room_number <{room_number}>, reason <{reason}>");
             yield return null;
         }
-        
+
+        public bool IsNeedToProcess(string hashValue)
+        {
+            GBLog.LogDebug($"isNeedToProcess(string hashValue <{hashValue}>)");
+            return false;
+        }
+
+        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        {
+            GBLog.LogDebug($"addKeyHash(keyValue <{keyValue}>, hashValue <{hashValue}>, type <{type.ToString()}>)");
+        }
+
         public void SetLoggingEnabled(bool isLoggingEnabled)
         {
             GBLog.LogDebug($"Setting logging enabled to: {isLoggingEnabled}");

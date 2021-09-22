@@ -7,12 +7,20 @@ using UnityEngine;
 
 namespace Plugins.GameBoost
 {
+    enum KeyHashType
+    {
+        Balance,
+        RoomDescription, 
+    }
+    
     interface IPluginMethods : ISettings
     {
         void InitializeWith(string apiKey);
         void SendEvent(string eventName, string jsonString, string deduplicateId);
         IEnumerator Level(string room_number, Action<BusData.LevelData> callMethod);
         IEnumerator Abilities(string reason, string room_number, Action<BusData.AbilitiesData> callMethod);
+        bool IsNeedToProcess(string hashValue);
+        void AddKeyHash(string keyValue, string hashValue, KeyHashType type);
     }
 }
 namespace Plugins.GameBoost.BusData

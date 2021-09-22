@@ -21,17 +21,6 @@ namespace Plugins.GameBoost.iOs
         public void InitializeWith(string apiKey)
         {
             _initializeWith(apiKey, GBNativeEvents.busMessage);
-
-            //TODO: remove!
-            rawLevel("test_room_1", r =>
-            {
-                GBLog.LogError($"RawLevel  r: {r}");
-            });
-
-            rawAbilities("test_room_1", "test_reason", r =>
-            {
-                GBLog.LogError($"RawAbilities  r: {r}");
-            });
         }
 
         public void SendEvent(string eventName, string jsonString, string deduplicateId)
@@ -74,6 +63,16 @@ namespace Plugins.GameBoost.iOs
             }
         }
         
+        public bool IsNeedToProcess(string hashValue)
+        {
+            return _isNeedToProcess(hashValue);
+        }
+
+        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        {
+            _addKeyHash(keyValue, hashValue, type.ToString());
+        }
+        
         public void MarkAsDevelopment()
         {
             // nothing to do -> iOS SDK can detect sandbox
@@ -107,6 +106,12 @@ namespace Plugins.GameBoost.iOs
         [DllImport("__Internal")]
         private static extern void _abilities(string room_number, string reason, string callbackID, GBNativeCallbacks.BusCallbackType callMethod);
 
+        [DllImport("__Internal")]
+        private static extern bool _isNeedToProcess(string hashValue);
+        
+        [DllImport("__Internal")]
+        private static extern void _addKeyHash(string keyValue, string hashValue, string type);
+        
         [DllImport("__Internal")]
         private static extern void _enableLogging(bool loggingEnabled);
     }

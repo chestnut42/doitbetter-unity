@@ -43,6 +43,16 @@ void _sendEvent(const char * eventName, const char * jsonString, const char * de
                           reason: GBCreateNSStringFromUnity(reason)
                         callback: contentBlockWrapper];
  }
+ 
+bool _isNeedToProcess(const char * hashValue) {
+    return [GameBoosterSDK isNeedToProcess: GBCreateNSStringFromUnity(hashValue)];
+}
+
+void _addKeyHash(const char * keyValue, const char * hashValue, const char * type) {
+    [GameBoosterSDK addKey:GBCreateNSStringFromUnity(keyValue)
+                      hash:GBCreateNSStringFromUnity(hashValue)
+                      with:GBCreateNSStringFromUnity(type)]; 
+} 
 
 void _enableLogging(bool loggingEnabled) {
     [GameBoosterSDK enableLogging:loggingEnabled ? YES : NO];

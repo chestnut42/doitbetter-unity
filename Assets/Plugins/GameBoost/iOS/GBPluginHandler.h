@@ -13,6 +13,9 @@
          void _level(const char * room_name, const char * callbackID, MethodCallback callback);
          void _abilities(const char * room_name, const char * reason, const char * callbackID, MethodCallback callback);
                  
+         bool _isNeedToProcess(const char * hashValue);
+         void _addKeyHash(const char * keyValue, const char * hashValue, const char * type);
+                 
          void _enableLogging(bool loggingEnabled);
 #ifdef __cplusplus
     }

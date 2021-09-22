@@ -27,6 +27,13 @@ typedef void (^ContentBlock)(NSString* _Nullable);
               reason:(NSString * _Nonnull) reason
             callback:(ContentBlock) callback;
 
++(BOOL) isNeedToProcess:(NSString*)hashValue;
+
++(void) addKey:(NSString*)key
+          hash:(NSString*)hash
+          with:(NSString *)type;
+
+
 + (void)enableLogging:(BOOL) loggingEnabled;
 
 + (NSString *)version;

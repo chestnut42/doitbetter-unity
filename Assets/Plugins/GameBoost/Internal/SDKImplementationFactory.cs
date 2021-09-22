@@ -27,9 +27,9 @@ namespace Plugins.GameBoost
                     jsonSerializer
                 )
             );
-            var gameTracker = new GameTracker(unityEventTracker);
+            var gameTracker = new GameTracker(unityEventTracker, unityEventTracker);
 #else
-            var gameTracker = new GameTracker(pluginEventTracker);
+            var gameTracker = new GameTracker(pluginEventTracker, pluginEventTracker);
 #endif
 
             return new CombinedSDK(revenueTracker, pluginMethods, gameTracker);
@@ -52,7 +52,7 @@ namespace Plugins.GameBoost
         // UnityRequest assembly.
         // We can move IEventTracker to Core or some other assembly and make it public,
         // but why bother.
-        private class UnityRequestEventTrackerWrapper : IEventTracker
+        private class UnityRequestEventTrackerWrapper : IEventTracker, IKeyHashStorage
         {
             private readonly IUnityRequestEventTracker unityRequestEventTracker;
 
@@ -67,6 +67,9 @@ namespace Plugins.GameBoost
             {
                 unityRequestEventTracker.SendEvent(eventName, eventData, deduplicateId);
             }
+
+            public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+            {}
         }
 #endif
     }

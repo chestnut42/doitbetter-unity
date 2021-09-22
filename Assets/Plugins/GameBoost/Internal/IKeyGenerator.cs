@@ -4,6 +4,6 @@ namespace Plugins.GameBoost
 {
     internal interface IKeyGenerator
     {
-        string GenerateKey(Dictionary<string, object> dataObject);
+        string GenerateKey(Dictionary<string, object> dataObject, KeyHashType type);
     }
 }

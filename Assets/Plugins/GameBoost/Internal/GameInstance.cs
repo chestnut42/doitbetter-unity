@@ -26,7 +26,7 @@ namespace Plugins.GameBoost
             Dictionary<string, object> roomDescription
         )
         {
-            var roomKey = keyGenerator.GenerateKey(roomDescription);
+            var roomKey = keyGenerator.GenerateKey(roomDescription, KeyHashType.RoomDescription);
             return new ArcheroRoom(
                 eventTracker,
                 roomNumber,

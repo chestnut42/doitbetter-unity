@@ -5,7 +5,7 @@ using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
-    internal class PluginEventTracker : IEventTracker
+    internal class PluginEventTracker : IEventTracker, IKeyHashStorage
     {
         private readonly IJsonSerializer jsonSerializer;
         private readonly IPluginMethods pluginMethods;
@@ -37,6 +37,15 @@ namespace Plugins.GameBoost
         public IEnumerator Abilities(string reason, string room_number, Action<BusData.AbilitiesData> callMethod)
         {
             return pluginMethods.Abilities(reason, room_number, callMethod);
+        }
+
+        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        {
+            var adoptedHash = hashValue.Replace('+', '-').Replace('/', '_');
+            if (pluginMethods.IsNeedToProcess(adoptedHash))
+            {
+                pluginMethods.AddKeyHash(keyValue, adoptedHash, type);
+            }
         }
     }
 }
