@@ -67,6 +67,17 @@ namespace Plugins.GameBoost.Android
             }
         }        
         
+        public bool IsNeedToProcess(string hashValue)
+        {
+            bool result = androidJavaClass.CallStatic<bool>("isNeedToProcess", hashValue);
+            return result;
+        }
+
+        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        {
+            androidJavaClass.CallStatic("add", keyValue, hashValue, type);
+        }        
+        
         public void MarkAsDevelopment()
         {
             androidJavaClass.CallStatic("markAsDevelopment");
