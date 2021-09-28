@@ -67,9 +67,9 @@ namespace Plugins.GameBoost.iOs
             return _isNeedToProcess(hashValue);
         }
 
-        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        public void AddKeyHash(string keyValue, string hashValue)
         {
-            _addKeyHash(keyValue, hashValue, type.ToString());
+            _addKeyHash(keyValue, hashValue);
         }
         
         public void MarkAsDevelopment()
@@ -109,7 +109,7 @@ namespace Plugins.GameBoost.iOs
         private static extern bool _isNeedToProcess(string hashValue);
         
         [DllImport("__Internal")]
-        private static extern void _addKeyHash(string keyValue, string hashValue, string type);
+        private static extern void _addKeyHash(string keyValue, string hashValue);
         
         [DllImport("__Internal")]
         private static extern void _enableLogging(bool loggingEnabled);

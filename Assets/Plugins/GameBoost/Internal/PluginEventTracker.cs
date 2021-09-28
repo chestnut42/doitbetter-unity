@@ -39,12 +39,12 @@ namespace Plugins.GameBoost
             return pluginMethods.Abilities(reason, room_number, callMethod);
         }
 
-        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        public void AddKeyHash(string keyValue, string hashValue)
         {
             var adoptedHash = hashValue.Replace('+', '-').Replace('/', '_');
             if (pluginMethods.IsNeedToProcess(adoptedHash))
             {
-                pluginMethods.AddKeyHash(keyValue, adoptedHash, type);
+                pluginMethods.AddKeyHash(keyValue, adoptedHash);
             }
         }
     }

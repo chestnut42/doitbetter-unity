@@ -44,9 +44,9 @@ namespace Plugins.GameBoost
             return false;
         }
 
-        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        public void AddKeyHash(string keyValue, string hashValue)
         {
-            GBLog.LogDebug($"addKeyHash(keyValue <{keyValue}>, hashValue <{hashValue}>, type <{type.ToString()}>)");
+            GBLog.LogDebug($"addKeyHash(keyValue <{keyValue}>, hashValue <{hashValue}>)");
         }
 
         public void SetLoggingEnabled(bool isLoggingEnabled)

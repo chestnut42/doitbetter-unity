@@ -68,7 +68,7 @@ namespace Plugins.GameBoost
                 unityRequestEventTracker.SendEvent(eventName, eventData, deduplicateId);
             }
 
-            public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+            public void AddKeyHash(string keyValue, string hashValue)
             {}
         }
 #endif

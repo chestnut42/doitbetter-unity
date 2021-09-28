@@ -48,10 +48,9 @@ bool _isNeedToProcess(const char * hashValue) {
     return [GameBoosterSDK isNeedToProcess: GBCreateNSStringFromUnity(hashValue)];
 }
 
-void _addKeyHash(const char * keyValue, const char * hashValue, const char * type) {
+void _addKeyHash(const char * keyValue, const char * hashValue) {
     [GameBoosterSDK addKey:GBCreateNSStringFromUnity(keyValue)
-                      hash:GBCreateNSStringFromUnity(hashValue)
-                      with:GBCreateNSStringFromUnity(type)]; 
+                      hash:GBCreateNSStringFromUnity(hashValue)]; 
 } 
 
 void _enableLogging(bool loggingEnabled) {

@@ -28,10 +28,12 @@ public class GBEventsScreenUI : MonoBehaviour
     public IArcheroRoom CreateRoom()
     {
         var roomDescription = new Dictionary<string, object>();
-        roomDescription["Enemies"] = new List<string> {"enemy_042"};
+        var index = 42;
+        roomDescription["Enemies"] = new List<string> {$"enemy_0{index}"};
 
         var balance = new Dictionary<string, object>();
-        balance["enemy_042"] = new Dictionary<string, object> { {"health", 2000}, {"color", "green"} };
+        var health = 2000;
+        balance["enemy_042"] = new Dictionary<string, object> { {"health", health}, {"color", "green"} };
 
         return GameBoostSDK
             .CreateGame(balance)

@@ -23,13 +23,13 @@ namespace Plugins.GameBoost
             this.keyHashStorage = keyHashStorage;
         }
 
-        public string GenerateKey(Dictionary<string, object> dataObject, KeyHashType type)
+        public string GenerateKey(Dictionary<string, object> dataObject)
         {
             var jsonString = jsonSerializer.Serialize(dataObject, true);
             var hashBytes = hashFunction.Calculate(jsonString);
             var hashString = dataEncoder.Encode(hashBytes);
             
-            keyHashStorage.AddKeyHash(jsonString, hashString, type);
+            keyHashStorage.AddKeyHash(jsonString, hashString);
 
             return hashString;
         }

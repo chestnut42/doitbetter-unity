@@ -4,6 +4,6 @@ namespace Plugins.GameBoost
 {
     internal interface IKeyHashStorage
     {
-        void AddKeyHash(string keyValue, string hashValue, KeyHashType type);
+        void AddKeyHash(string keyValue, string hashValue);
     }
 }

@@ -72,9 +72,9 @@ namespace Plugins.GameBoost.Android
             return result;
         }
 
-        public void AddKeyHash(string keyValue, string hashValue, KeyHashType type)
+        public void AddKeyHash(string keyValue, string hashValue)
         {
-            androidJavaClass.CallStatic("add", keyValue, hashValue, type);
+            androidJavaClass.CallStatic("add", keyValue, hashValue);
         }        
         
         public void MarkAsDevelopment()
@@ -174,7 +174,7 @@ namespace Plugins.GameBoost.Android
             }
             catch (Exception ex)
             {
-                GBLog.LogError($"nativeCallback calling exception");
+                GBLog.LogError($"nativeCallback calling exception {ex}");
             }
         }
     }        

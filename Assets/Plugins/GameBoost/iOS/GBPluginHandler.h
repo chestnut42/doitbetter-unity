@@ -14,7 +14,7 @@
          void _abilities(const char * room_name, const char * reason, const char * callbackID, MethodCallback callback);
                  
          bool _isNeedToProcess(const char * hashValue);
-         void _addKeyHash(const char * keyValue, const char * hashValue, const char * type);
+         void _addKeyHash(const char * keyValue, const char * hashValue);
                  
          void _enableLogging(bool loggingEnabled);
 #ifdef __cplusplus

@@ -31,7 +31,7 @@ namespace Plugins.GameBoost
             return new GameInstance(
                 keyGenerator,
                 eventTracker,
-                keyGenerator.GenerateKey(balance, KeyHashType.Balance));
+                keyGenerator.GenerateKey(balance));
         }
     }
 }

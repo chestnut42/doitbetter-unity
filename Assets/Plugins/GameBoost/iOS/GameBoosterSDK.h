@@ -30,9 +30,7 @@ typedef void (^ContentBlock)(NSString* _Nullable);
 +(BOOL) isNeedToProcess:(NSString*)hashValue;
 
 +(void) addKey:(NSString*)key
-          hash:(NSString*)hash
-          with:(NSString *)type;
-
+          hash:(NSString*)hash;
 
 + (void)enableLogging:(BOOL) loggingEnabled;
 
