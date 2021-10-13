@@ -5,7 +5,7 @@ using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
 {
-    internal class PluginEventTracker : IEventTracker, IKeyHashStorage
+    internal class PluginEventTracker : IEventTracker, IGameParamsRequest, IKeyHashStorage
     {
         private readonly IJsonSerializer jsonSerializer;
         private readonly IPluginMethods pluginMethods;
@@ -29,14 +29,14 @@ namespace Plugins.GameBoost
             pluginMethods.SendEvent(eventName, jsonString, deduplicateId);
         }
         
-        public AsyncResult<string, BusData.LevelData> LevelRequest(string room_number)
+        public AsyncResult<string, BusData.LevelData> LevelRequest(string roomNumber)
         {
-            return new AsyncResult<string, BusData.LevelData>(room_number, this.Level);
+            return new AsyncResult<string, BusData.LevelData>(roomNumber, this.Level);
         }            
         
-        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason, string room_number)
+        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason, string roomNumber)
         {
-            var parameters = new Tuple<string, string>(reason, room_number);
+            var parameters = new Tuple<string, string>(reason, roomNumber);
             return new AsyncResult<Tuple<string, string>, BusData.AbilitiesData>(parameters, this.Abilities);
         }                    
         
@@ -48,44 +48,14 @@ namespace Plugins.GameBoost
                 pluginMethods.AddKeyHash(keyValue, adoptedHash);
             }
         }
-        
-        private IEnumerator Level(string room_number, Action<BusData.LevelData> callMethod)
+        public void Level(string roomNumber, Action<BusData.LevelData> callMethod)
         {
-            return pluginMethods.Level(room_number, callMethod);
+            pluginMethods.Level(roomNumber, callMethod);
         }
 
-        private IEnumerator Abilities(Tuple<string, string> parameters, Action<BusData.AbilitiesData> callMethod)
+        public void Abilities(Tuple<string, string> parameters, Action<BusData.AbilitiesData> callMethod)
         {
-            return pluginMethods.Abilities(parameters.Item1, parameters.Item2, callMethod);
+            pluginMethods.Abilities(parameters.Item1, parameters.Item2, callMethod);
         }
-
-    }
-    
-    class AsyncResult<Params, Result>
-    {
-        public delegate IEnumerator AsyncCommand(Params parameters, Action<Result> callMethod);
-        
-        private Params parameters;
-        private Result commandResult;
-        private Boolean isDone;
-        private AsyncCommand command;
-        
-        public Result CommandResult => commandResult;
-        public Boolean IsDone => isDone;
-        
-        public AsyncResult(Params parameters, AsyncCommand command)
-        {
-            this.parameters = parameters;
-            this.command = command;
-        }
-        public IEnumerator Run()
-        {
-            if (!isDone) {
-                yield return null;
-                command(parameters, result => commandResult = result);
-                isDone = true;                 
-            }
-        }
-
     }
 }

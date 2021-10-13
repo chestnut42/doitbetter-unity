@@ -27,9 +27,9 @@ namespace Plugins.GameBoost
                     jsonSerializer
                 )
             );
-            var gameTracker = new GameTracker(unityEventTracker, unityEventTracker);
+            var gameTracker = new GameTracker(unityEventTracker, pluginEventTracker, unityEventTracker);
 #else
-            var gameTracker = new GameTracker(pluginEventTracker, pluginEventTracker);
+            var gameTracker = new GameTracker(pluginEventTracker, pluginEventTracker, pluginEventTracker);
 #endif
 
             return new CombinedSDK(revenueTracker, pluginMethods, gameTracker);

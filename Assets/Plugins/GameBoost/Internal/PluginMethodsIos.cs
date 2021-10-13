@@ -32,34 +32,20 @@ namespace Plugins.GameBoost.iOs
             _enableLogging(isLoggingEnabled);
         }
         
-        public IEnumerator Level(string room_number, Action<LevelData> callMethod)
+        public void Level(string roomNumber, Action<LevelData> callMethod)
         {
-            var done = false;
-            
-            rawLevel(room_number, json =>
+            rawLevel(roomNumber, json =>
             {
                 callMethod.Invoke(LevelData.ParseOrNull(json)); 
-                done = true;                    
             });
-            while (!done)
-            {
-                yield return null;
-            }
         }
         
-        public IEnumerator Abilities(string reason, string room_number, Action<AbilitiesData> callMethod)
+        public void Abilities(string reason, string roomNumber, Action<AbilitiesData> callMethod)
         {
-            var done = false;
-            
-            rawAbilities(room_number, reason, json =>
+            rawAbilities(roomNumber, reason, json =>
             {
                 callMethod(AbilitiesData.ParseOrNull(json));
-                done = true;                    
             });
-            while (!done)
-            {
-                yield return null;
-            }
         }
         
         public bool IsNeedToProcess(string hashValue)
@@ -77,18 +63,18 @@ namespace Plugins.GameBoost.iOs
             // nothing to do -> iOS SDK can detect sandbox
         }
 
-        private void rawLevel(string room_number, Action<string> callback)
+        private void rawLevel(string roomNumber, Action<string> callback)
         {
             GBNativeCallbacks.call(
-                callID => _level(room_number, callID, GBNativeCallbacks.nativeCallback ),
+                callID => _level(roomNumber, callID, GBNativeCallbacks.nativeCallback ),
                 callback
             );            
         }
 
-        private void rawAbilities(string room_number, string reason, Action<string> callback)
+        private void rawAbilities(string roomNumber, string reason, Action<string> callback)
         {
             GBNativeCallbacks.call(
-                callID => _abilities(room_number, reason, callID, GBNativeCallbacks.nativeCallback), 
+                callID => _abilities(roomNumber, reason, callID, GBNativeCallbacks.nativeCallback), 
                 callback
             );   
         }
@@ -100,10 +86,10 @@ namespace Plugins.GameBoost.iOs
         private static extern void _sendEvent(string eventName, string jsonString, string deduplicateId);
 
         [DllImport("__Internal")]
-        private static extern void _level(string room_number, string callbackID, GBNativeCallbacks.BusCallbackType callMethod);
+        private static extern void _level(string roomNumber, string callbackID, GBNativeCallbacks.BusCallbackType callMethod);
 
         [DllImport("__Internal")]
-        private static extern void _abilities(string room_number, string reason, string callbackID, GBNativeCallbacks.BusCallbackType callMethod);
+        private static extern void _abilities(string roomNumber, string reason, string callbackID, GBNativeCallbacks.BusCallbackType callMethod);
 
         [DllImport("__Internal")]
         private static extern bool _isNeedToProcess(string hashValue);
@@ -188,7 +174,7 @@ namespace Plugins.GameBoost.iOs
             }
             catch (Exception ex)
             {
-                GBLog.LogError($"nativeCallback calling exception");
+                GBLog.LogError($"nativeCallback calling exception {ex}");
             }
         }
     }    

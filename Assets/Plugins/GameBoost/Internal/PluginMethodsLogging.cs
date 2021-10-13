@@ -26,16 +26,16 @@ namespace Plugins.GameBoost
                            $", deduplicate ID: {deduplicateId}");
         }
 
-        public IEnumerator Level(string room_number, Action<LevelData> callMethod)
+        public void Level(string roomNumber, Action<LevelData> callMethod)
         {
-            GBLog.LogDebug($"RawLevel room_number <{room_number}>");
-            yield return null;
+            callMethod(null);
+            GBLog.LogDebug($"RawLevel roomNumber <{roomNumber}>");
         }
 
-        public IEnumerator Abilities(string reason, string room_number, Action<AbilitiesData> callMethod)
+        public void Abilities(string reason, string roomNumber, Action<AbilitiesData> callMethod)
         {
-            GBLog.LogDebug($"RawAbilities room_number <{room_number}>, reason <{reason}>");
-            yield return null;
+            callMethod(null);
+            GBLog.LogDebug($"RawAbilities roomNumber <{roomNumber}>, reason <{reason}>");
         }
 
         public bool IsNeedToProcess(string hashValue)
