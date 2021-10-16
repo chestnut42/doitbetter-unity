@@ -27,9 +27,9 @@ namespace Plugins.GameBoost
                     jsonSerializer
                 )
             );
-            var gameTracker = new GameTracker(unityEventTracker);
+            var gameTracker = new GameTracker(unityEventTracker, pluginEventTracker, unityEventTracker);
 #else
-            var gameTracker = new GameTracker(pluginEventTracker);
+            var gameTracker = new GameTracker(pluginEventTracker, pluginEventTracker, pluginEventTracker);
 #endif
 
             return new CombinedSDK(revenueTracker, pluginMethods, gameTracker);
@@ -38,9 +38,9 @@ namespace Plugins.GameBoost
         private static IPluginMethods CreatePluginMethods(IGameBoostEventsBus events)
         {
 #if UNITY_IPHONE && !UNITY_EDITOR
-            return new PluginMethodsIos(events);
+            return new iOs.PluginMethods(events);
 #elif UNITY_ANDROID && !UNITY_EDITOR
-            return new PluginMethodsAndroid(events);
+            return new Android.PluginMethods(events);
 #else
             return new PluginMethodsLogging(events);
 #endif
@@ -52,7 +52,7 @@ namespace Plugins.GameBoost
         // UnityRequest assembly.
         // We can move IEventTracker to Core or some other assembly and make it public,
         // but why bother.
-        private class UnityRequestEventTrackerWrapper : IEventTracker
+        private class UnityRequestEventTrackerWrapper : IEventTracker, IKeyHashStorage
         {
             private readonly IUnityRequestEventTracker unityRequestEventTracker;
 
@@ -67,6 +67,9 @@ namespace Plugins.GameBoost
             {
                 unityRequestEventTracker.SendEvent(eventName, eventData, deduplicateId);
             }
+
+            public void AddKeyHash(string keyValue, string hashValue)
+            {}
         }
 #endif
     }

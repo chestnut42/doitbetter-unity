@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Plugins.GameBoost
@@ -20,6 +22,7 @@ namespace Plugins.GameBoost
         private static readonly string EventNamePlayerChoseAbility = "pl_abl";
 
         private readonly IEventTracker eventTracker;
+        private readonly IGameParamsRequest gameParamsRequest;
         private readonly string roomNumber;
         private readonly string roomName;
         private readonly string roomKey;
@@ -27,12 +30,14 @@ namespace Plugins.GameBoost
 
         public ArcheroRoom(
             IEventTracker eventTracker,
+            IGameParamsRequest gameParamsRequest,
             string roomNumber,
             string roomName,
             string roomKey,
             string balanceKey)
         {
             this.eventTracker = eventTracker;
+            this.gameParamsRequest = gameParamsRequest;
             this.roomNumber = roomNumber;
             this.roomName = roomName;
             this.roomKey = roomKey;
@@ -57,6 +62,27 @@ namespace Plugins.GameBoost
             eventData[EventKeyPlayerState] = playerState;
             eventData[EventKeyDynamicBalance] = dynamicBalance;
             eventTracker.SendEvent(EventNameStarted, eventData);
+        }
+
+        public AsyncResult<string, BusData.LevelData> LevelRequest()
+        {
+            return gameParamsRequest.LevelRequest(this.roomNumber);
+        }
+
+        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason)
+        {
+            return gameParamsRequest.AbilitiesRequest(reason, this.roomNumber);
+        }
+
+        public void Level(Action<BusData.LevelData> callMethod)
+        {
+            gameParamsRequest.Level(this.roomNumber, callMethod);
+        }
+        
+        public void Abilities(string reason, Action<BusData.AbilitiesData> callMethod)
+        {
+            var parameters = new Tuple<string, string>(reason, this.roomNumber);
+            gameParamsRequest.Abilities(parameters, callMethod);
         }
 
         public void EnemiesKilled(

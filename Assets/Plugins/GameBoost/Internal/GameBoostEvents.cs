@@ -6,10 +6,13 @@ namespace Plugins.GameBoost
     internal class GameBoostEvents: IGameBoostEvents, IGameBoostEventsBus
     {
         private const string SANDBOX_STATUS = "SANDBOX_STATUS";
+        private const string BOOST_EBNABLED = "BOOST_EBNABLED";
 
 
         #region IGameBoostEvents
         public event IGameBoostEvents.SandboxStatusHandler sandboxStatus;
+        public event IGameBoostEvents.BooleanStatusHandler boostEnabledStatus;
+        
         #endregion
 
 
@@ -20,6 +23,9 @@ namespace Plugins.GameBoost
             {
                 case SANDBOX_STATUS:
                     ReceiveStatus(content);
+                    break;
+                case BOOST_EBNABLED:
+                    ReceiveBoostStatus(content);
                     break;
                 default:
                     GBLog.LogError($"busMessage received unsupported type == {type}");
@@ -43,6 +49,21 @@ namespace Plugins.GameBoost
             else
             {
                 GBLog.LogError($"SandboxStatus receive unsupported type == {value}");
+            }
+        }
+        private void ReceiveBoostStatus(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "true":
+                    boostEnabledStatus?.Invoke(true);
+                    break;
+                case "false":
+                    boostEnabledStatus?.Invoke(false);
+                    break;
+                default:
+                    GBLog.LogError($"busMessage received unsuported value({value}) for boostEnabledStatus");
+                    break;
             }
         }
         #endregion

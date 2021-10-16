@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Plugins.GameBoost
@@ -85,5 +87,13 @@ namespace Plugins.GameBoost
             Dictionary<string, object> playerState,
             Dictionary<string, object> dynamicBalance,
             Dictionary<string, object> roomPlayData);
+
+        public AsyncResult<string, BusData.LevelData> LevelRequest();
+
+        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason);
+
+        public void Level(Action<BusData.LevelData> callMethod);
+
+        public void Abilities(string reason, Action<BusData.AbilitiesData> callMethod);
     }
 }

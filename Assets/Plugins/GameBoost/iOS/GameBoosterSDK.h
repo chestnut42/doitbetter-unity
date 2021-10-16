@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 typedef void (^MessageBusBlock)(NSString * _Nonnull, NSString * _Nonnull);
+typedef void (^ContentBlock)(NSString* _Nullable);
 
 @interface GameBoosterSDK : NSObject
 - (instancetype)init NS_UNAVAILABLE;
@@ -18,6 +19,18 @@ typedef void (^MessageBusBlock)(NSString * _Nonnull, NSString * _Nonnull);
 + (void)sendEventWithName:(NSString * _Nonnull)eventName
                jsonString:(NSString * _Nullable)jsonString
             deduplicateID:(NSString * _Nullable)deduplicateID;
+
++ (void) levelFor:(NSString * _Nonnull)room_number
+         callback:(ContentBlock) callback;
+
++ (void)abilitiesFor:(NSString * _Nonnull) room_number
+              reason:(NSString * _Nonnull) reason
+            callback:(ContentBlock) callback;
+
++(BOOL) isNeedToProcess:(NSString*)hashValue;
+
++(void) addKey:(NSString*)key
+          hash:(NSString*)hash;
 
 + (void)enableLogging:(BOOL) loggingEnabled;
 

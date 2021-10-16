@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using Plugins.GameBoost.BusData;
 using Plugins.GameBoost.Core;
 
 namespace Plugins.GameBoost
@@ -21,6 +24,29 @@ namespace Plugins.GameBoost
             GBLog.LogDebug($"Sending event with name <{eventName}>" +
                            $", params: {jsonString}" +
                            $", deduplicate ID: {deduplicateId}");
+        }
+
+        public void Level(string roomNumber, Action<LevelData> callMethod)
+        {
+            callMethod(null);
+            GBLog.LogDebug($"RawLevel roomNumber <{roomNumber}>");
+        }
+
+        public void Abilities(string reason, string roomNumber, Action<AbilitiesData> callMethod)
+        {
+            callMethod(null);
+            GBLog.LogDebug($"RawAbilities roomNumber <{roomNumber}>, reason <{reason}>");
+        }
+
+        public bool IsNeedToProcess(string hashValue)
+        {
+            GBLog.LogDebug($"isNeedToProcess(string hashValue <{hashValue}>)");
+            return false;
+        }
+
+        public void AddKeyHash(string keyValue, string hashValue)
+        {
+            GBLog.LogDebug($"addKeyHash(keyValue <{keyValue}>, hashValue <{hashValue}>)");
         }
 
         public void SetLoggingEnabled(bool isLoggingEnabled)

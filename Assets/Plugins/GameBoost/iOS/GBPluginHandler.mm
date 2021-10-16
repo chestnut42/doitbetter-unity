@@ -23,6 +23,36 @@ void _sendEvent(const char * eventName, const char * jsonString, const char * de
                         deduplicateID:GBCreateNSStringFromUnity(deduplicateId)];
 }
 
+ void _level(const char * room_number, const char * callbackID, MethodCallback callback) {
+    NSString* nscallbackID = GBCreateNSStringFromUnity(callbackID);
+    ContentBlock contentBlockWrapper = ^void (NSString * _Nullable content) {
+        callback([nscallbackID cStringUsingEncoding:NSUTF8StringEncoding],[content cStringUsingEncoding:NSUTF8StringEncoding]);
+    };
+
+    [GameBoosterSDK levelFor: GBCreateNSStringFromUnity(room_number)
+                    callback: contentBlockWrapper];
+ }
+  
+ void _abilities(const char * room_number, const char * reason, const char * callbackID, MethodCallback callback) {
+     NSString* nscallbackID = GBCreateNSStringFromUnity(callbackID);
+     ContentBlock contentBlockWrapper = ^void (NSString * _Nullable content) {
+         callback([nscallbackID cStringUsingEncoding:NSUTF8StringEncoding],[content cStringUsingEncoding:NSUTF8StringEncoding]);
+     };
+ 
+    [GameBoosterSDK abilitiesFor: GBCreateNSStringFromUnity(room_number)
+                          reason: GBCreateNSStringFromUnity(reason)
+                        callback: contentBlockWrapper];
+ }
+ 
+bool _isNeedToProcess(const char * hashValue) {
+    return [GameBoosterSDK isNeedToProcess: GBCreateNSStringFromUnity(hashValue)];
+}
+
+void _addKeyHash(const char * keyValue, const char * hashValue) {
+    [GameBoosterSDK addKey:GBCreateNSStringFromUnity(keyValue)
+                      hash:GBCreateNSStringFromUnity(hashValue)]; 
+} 
+
 void _enableLogging(bool loggingEnabled) {
     [GameBoosterSDK enableLogging:loggingEnabled ? YES : NO];
 }

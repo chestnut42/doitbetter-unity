@@ -8,23 +8,30 @@ namespace Plugins.GameBoost
         private readonly IJsonSerializer jsonSerializer;
         private readonly IHashFunction hashFunction;
         private readonly IDataEncoder dataEncoder;
+        private readonly IKeyHashStorage keyHashStorage;
 
         public JsonKeyGenerator(
             IJsonSerializer jsonSerializer,
             IHashFunction hashFunction,
-            IDataEncoder dataEncoder
+            IDataEncoder dataEncoder,
+            IKeyHashStorage keyHashStorage
         )
         {
             this.jsonSerializer = jsonSerializer;
             this.hashFunction = hashFunction;
             this.dataEncoder = dataEncoder;
+            this.keyHashStorage = keyHashStorage;
         }
 
         public string GenerateKey(Dictionary<string, object> dataObject)
         {
             var jsonString = jsonSerializer.Serialize(dataObject, true);
             var hashBytes = hashFunction.Calculate(jsonString);
-            return dataEncoder.Encode(hashBytes);
+            var hashString = dataEncoder.Encode(hashBytes);
+            
+            keyHashStorage.AddKeyHash(jsonString, hashString);
+
+            return hashString;
         }
     }
 }
