@@ -93,7 +93,7 @@ public class GBEventsScreenUI : MonoBehaviour
         
         Debug.Log($"RedButtonPressed() Coroutine 1 - start");
         yield return abRequest.Run();
-        var abResult = (abRequest.CommandResult == null) ? "null" : abRequest.CommandResult.abilities.ToString();
+        var abResult = (abRequest.CommandResult == null) ? "null" : $"{abRequest.CommandResult.abilities}";
         Debug.Log($"abRequest.IsDone == {abRequest.IsDone} with Abilities = {abResult}");
         Debug.Log($"RedButtonPressed() Coroutine 1 - end");        
         
