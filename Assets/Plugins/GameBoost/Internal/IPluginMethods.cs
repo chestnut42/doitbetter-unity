@@ -22,7 +22,7 @@ namespace Plugins.GameBoost.BusData
     [Serializable]
     public class AbilitiesData
     {
-        public List<int> abilities {  get; private set; }
+        public List<string> abilities {  get; private set; }
 
         public static AbilitiesData ParseOrNull(string json)
         {
@@ -30,11 +30,17 @@ namespace Plugins.GameBoost.BusData
             {
                 try
                 {
-                    return JsonUtility.FromJson<AbilitiesData>(json);
+                    var rootNode = JSONNode.Parse(json);
+                    var result = new AbilitiesData();
+                    if (rootNode["abilities"].IsArray)
+                    {
+                        result.abilities = rootNode["abilities"].AsStringList;
+                    }
+                    return result;
                 }
                 catch (Exception e)
                 {
-                    GBLog.LogError($"AbilitiesResponse ParseOrNull exception ${e}");
+                    GBLog.LogError($"AbilitiesData JSONNode.Parse ${e}");
                 }
             }
             else
