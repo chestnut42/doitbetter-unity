@@ -2,12 +2,7 @@
 
 ## Installation
 
-### Short
 Download and open **.unitypackage** of the latest release.
-
-### Long
-
-If you feel a little adventurous today, do not hesitate to read through this repo. You then can just copy what you want in your project.
 
 ## Integration
 
@@ -155,122 +150,7 @@ After our system has acquired enough data it can suggest certain changes to the 
 plays the game. Those changes are produced on the fly, i.e. as the player plays the game the game should
 as SDK for what to do next.
 
-### Latency
-
-Each such request involves network call. Network calls tend to be inconsistent in their latency due to number
-of external reasons. To smooth game experience and ease SDK integrations all such calls are guaranteed
-to return no later than 5 seconds.
-
-### Empty response handling
-
-In certain situations the SDK won't produce any meaningful suggestion. In that case the result of behaviour 
-changing calls will be empty. You will need to check if the response is not empty prior to applying it to a game.
-
-**IMPORTANT** Some behaviour changing calls return several pieces of information. For example, `LeveData` has
-`roomName` to use as next level **and** `dynamicBalance` to use in the next level. **Both** of these parts
-can be empty independently from each other. Here's a pseudo code to handle such situations:
-
-```
-var levelData = ... // some code that acquires level data from SDK
-if (levelData.roomName is not empty) {
-  use levelData.roomName as the next room
-}
-
-// at this point even if roomName is empty, the dynamic balance will have the chance to be applied
-if (levelData.dynamicBalance) {
-  use levelData.dynamicBalance as dynamic balance for the next room
-}
-```
-
-Each response type has its own ways to check if the result is empty. General rule is to check all possible
-bad values, i.e. `null` values, empty strings, empty arrays (or arrays of wrong size), etc.
-
-If the response is empty in some parts the game should behave as if SDK won't there. That means,
-if the `roomName` is empty the game should ask its own algorithm which room to use next.
-
-### Response freshness
-
-Behaviour changing calls involve network. You might want to make these calls in advance to avoid
-loading times and improve user experience.
-
-In that case it's **important** to keep such call not older than one room. SDK performance depends
-heavily on the knowledge of how the player plays **this exact session**. 
-For example:
-
-* The players starts to play the room number 6 in the first location
-* At this point it's reasonable to ask SDK what room to use as room 7, **but** it's strongly
-discouraged to ask for room 8, 9, and so on at this point in time.
-* The player finished the room number 6. Started room number 7. The game sent `RoomStarted` event for the
-  room number 7.
-* At this moment you can ask SDK for the `levelData` for the room number 8.
-
-### Coroutines
-
-Each behaviour control call has two versions: with callback and with coroutine object. Both of these versions
-are completely identical. You can choose any version depending on your preferences.
-
-## Game Behaviour Control API
-
-### Level Data
-
-You can ask for level data in one of the following ways:
-
-```c#
-game.Level("1_6", levelData => {
-  ... // code to process levelData
-});
-
-// in a coroutine context
-var request = game.LevelRequest("1_6")
-yield return request.Run();
-if (request.IsDone) {
-  ... // code to process levelData
-}
-```
-
-Once you have `LevelData` object in hand you can process its contents like this:
-
-```c#
-var levelData = ...
-if (!string.IsNullOrWhiteSpace(levelData.RoomName)) {
-  ChangeNextRoom(levelData.RoomName)
-}
-if (levelData.DynBalance != null) {
-  if (levelData.DynBalance["some_dyn_balance_key"].IsString) {
-    ApplySomeDynBalanceForTheNextRoom(levelData.DynBalance["some_dyn_balance_key"])
-  }
-  if (leveData.DynBalance["some_other_key"].IsNumber) {
-    ApplySomeOtherDynBalanceForTheNextRoom(leveData.DynBalance["some_other_key"].AsInt)
-  }
-}
-```
-
-### Abilities Data
-
-You can ask for abilities data in one of the following ways:
-
-```c#
-game.Abilities("1_6", "level_up", abilitiesData => {
-  ... // code to process abilitiesData
-});
-
-// in a coroutine context
-var request = game.AbilitiesRequest("1_6", "level_up")
-yield return request.Run();
-if (request.IsDone) {
-  ... // code to process abilitiesData
-}
-```
-
-Once you have `AbilitiesData` object in hand you can process its contents like this:
-
-```c#
-var abilitiesData = ...
-if ((abilitiesData.abilities != null)
- && (abilitiesData.abilities.Count == 3/* or 2 or other number you expect */) ) {
-  ApplyAbilitiesForTheNextRoom(abilitiesData.abilities)
-}
-```
+[More details are here](docs/behaviour-control.md)
 
 ## Game Types
 
@@ -278,7 +158,7 @@ We respect each game's personality. Carefully harvesting each event and putting 
 Different kind of Games need different treatment.
 
 Here's the list of currently supported integrations:
-* [Archero-style games](https://github.com/chestnut42/doitbetter-unity/blob/main/docs/archero-style.md)
+* [Archero-style games](docs/archero-style.md)
 
 
 ## Data Object
