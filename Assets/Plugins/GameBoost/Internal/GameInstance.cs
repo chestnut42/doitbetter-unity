@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Plugins.GameBoost
@@ -32,11 +33,32 @@ namespace Plugins.GameBoost
             var roomKey = keyGenerator.GenerateKey(roomDescription);
             return new ArcheroRoom(
                 eventTracker,
-                gameParamsRequest,
                 roomNumber,
                 roomName,
                 roomKey,
                 balanceKey);
+        }
+
+
+        public IAsyncResult<BusData.LevelData> LevelRequest(string roomNumber)
+        {
+            return gameParamsRequest.LevelRequest(roomNumber);
+        }
+
+        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string roomNumber, string reason)
+        {
+            return gameParamsRequest.AbilitiesRequest(reason, roomNumber);
+        }
+
+        public void Level(string roomNumber, Action<BusData.LevelData> callMethod)
+        {
+            gameParamsRequest.Level(roomNumber, callMethod);
+        }
+
+        public void Abilities(string roomNumber, string reason, Action<BusData.AbilitiesData> callMethod)
+        {
+            var parameters = new Tuple<string, string>(reason, roomNumber);
+            gameParamsRequest.Abilities(parameters, callMethod);
         }
     }
 }

@@ -30,5 +30,55 @@ namespace Plugins.GameBoost
                 return null;
             }
         }
+
+        public IAsyncResult<BusData.LevelData> LevelRequest(string roomNumber)
+        {
+            try
+            {
+                return wrappedGame.LevelRequest(roomNumber);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"LevelRequest: {exception}");
+            }
+            return null;
+        }
+
+        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string roomNumber, string reason)
+        {
+            try
+            {
+                return wrappedGame.AbilitiesRequest(roomNumber, reason);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"AbilitiesRequest: {exception}");
+            }
+            return null;
+        }
+
+        public void Level(string roomNumber, Action<BusData.LevelData> callMethod)
+        {
+            try
+            {
+                wrappedGame.Level(roomNumber, callMethod);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"Level with callback: {exception}");
+            }
+        }
+
+        public void Abilities(string roomNumber, string reason, Action<BusData.AbilitiesData> callMethod)
+        {
+            try
+            {
+                wrappedGame.Abilities(roomNumber, reason, callMethod);
+            }
+            catch (Exception exception)
+            {
+                GBLog.LogError($"Abilities with callback: {exception}");
+            }
+        }
     }
 }

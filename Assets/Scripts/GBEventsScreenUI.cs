@@ -16,7 +16,7 @@ public class GBEventsScreenUI : MonoBehaviour
             OutputText.text = status.ToString();
             Debug.Log($"sandboxStatus == {status} ");
         };
-        
+
         GameBoostSDK.Events.boostEnabledStatus += status =>
         {
             OutputText.text = status.ToString();
@@ -26,18 +26,23 @@ public class GBEventsScreenUI : MonoBehaviour
         GameBoostSDK.Initialize(APIKey);
     }
 
+
+    public IGame CreateGame()
+    {
+        var balance = new Dictionary<string, object>();
+        var health = 2000;
+        balance["enemy_042"] = new Dictionary<string, object> { {"health", health}, {"color", "green"} };
+
+        return GameBoostSDK.CreateGame(balance);
+    }
+
     public IArcheroRoom CreateRoom()
     {
         var roomDescription = new Dictionary<string, object>();
         var index = 42;
         roomDescription["Enemies"] = new List<string> {$"enemy_0{index}"};
 
-        var balance = new Dictionary<string, object>();
-        var health = 2000;
-        balance["enemy_042"] = new Dictionary<string, object> { {"health", health}, {"color", "green"} };
-
-        return GameBoostSDK
-            .CreateGame(balance)
+        return CreateGame()
             .CreateArcheroRoom(
                 "location_1_room_2",
                 "location_1_room_0023",
@@ -48,12 +53,8 @@ public class GBEventsScreenUI : MonoBehaviour
     public void RedButtonPressed()
     {
         Debug.Log("send RED event");
-        var room = CreateRoom(); 
-        room.Started(
-            new Dictionary<string, object>{{"health", 400}},
-            new Dictionary<string, object>{{"crit_hit", 0.65}});
-        
-        StartCoroutine(runTests(room));
+        var game = CreateGame();
+        StartCoroutine(runTests(game));
     }
 
     public void GreenButtonPressed()
@@ -74,38 +75,38 @@ public class GBEventsScreenUI : MonoBehaviour
         GameBoostSDK.MarkAsDevelopment();
     }
 
-    IEnumerator runTests(IArcheroRoom room)
+    IEnumerator runTests(IGame room)
     {
         Debug.Log($"***************");
         Debug.Log($"testCoroutines");
         Debug.Log($"***************");
         yield return testCoroutines(room);
-        
+
         Debug.Log($"***************");
         Debug.Log($"testCallbacks");
         Debug.Log($"***************");
         testCallbacks(room);
     }
 
-    IEnumerator testCoroutines(IArcheroRoom room)
+    IEnumerator testCoroutines(IGame game)
     {
-        var abRequest = room.AbilitiesRequest("lvlup");
-        
+        var abRequest = game.AbilitiesRequest("location_1_room_2", "lvlup");
+
         Debug.Log($"RedButtonPressed() Coroutine 1 - start");
         yield return abRequest.Run();
         var abResult = (abRequest.CommandResult == null) ? "null" : $"{abRequest.CommandResult.abilities}";
         Debug.Log($"abRequest.IsDone == {abRequest.IsDone} with Abilities = {abResult}");
-        Debug.Log($"RedButtonPressed() Coroutine 1 - end");        
-        
-        
-        var leveRequest = room.LevelRequest();
-        
+        Debug.Log($"RedButtonPressed() Coroutine 1 - end");
+
+
+        var leveRequest = game.LevelRequest("location_1_room_2");
+
         Debug.Log($"RedButtonPressed() Coroutine 2 - start");
         yield return leveRequest.Run();
 
         if (leveRequest.CommandResult != null)
         {
-            Debug.Log($"leveRequest.IsDone == {leveRequest.IsDone} with DynBalance = {leveRequest.CommandResult.DynBalance} RoomName = {leveRequest.CommandResult.RoomName}");            
+            Debug.Log($"leveRequest.IsDone == {leveRequest.IsDone} with DynBalance = {leveRequest.CommandResult.DynBalance} RoomName = {leveRequest.CommandResult.RoomName}");
         }
         else
         {
@@ -114,10 +115,10 @@ public class GBEventsScreenUI : MonoBehaviour
         Debug.Log($"RedButtonPressed() Coroutine 2 - end");
     }
 
-    void testCallbacks(IArcheroRoom room)
+    void testCallbacks(IGame game)
     {
         Debug.Log($"__room.Abilities - start");
-        room.Abilities( "lvlup", data =>
+        game.Abilities( "location_1_room_2","lvlup", data =>
         {
             if (data!=null)
             {
@@ -131,7 +132,7 @@ public class GBEventsScreenUI : MonoBehaviour
         });
 
         Debug.Log($"____room.Level - start");
-        room.Level(data =>
+        game.Level("location_1_room_2", data =>
         {
             if (data != null)
             {
@@ -139,7 +140,7 @@ public class GBEventsScreenUI : MonoBehaviour
             }
             else
             {
-                Debug.Log($"____Level( null )");                
+                Debug.Log($"____Level( null )");
             }
 
             Debug.Log($"____room.Level - end");

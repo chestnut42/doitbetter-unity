@@ -102,55 +102,5 @@ namespace Plugins.GameBoost
                 GBLog.LogError($"PlayerChoseAbility: {exception}");
             }
         }
-
-        public IAsyncResult<BusData.LevelData> LevelRequest()
-        {
-            try
-            {
-                return wrappedRoom.LevelRequest();
-            }
-            catch (Exception exception)
-            {
-                GBLog.LogError($"LevelRequest: {exception}");
-            }
-            return null;
-        }
-
-        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string reason)
-        {
-            try
-            {
-                return wrappedRoom.AbilitiesRequest(reason);
-            }
-            catch (Exception exception)
-            {
-                GBLog.LogError($"AbilitiesRequest: {exception}");
-            }
-            return null;
-        }
-
-        public void Level(Action<BusData.LevelData> callMethod)
-        {
-            try
-            {
-                wrappedRoom.Level(callMethod);
-            }
-            catch (Exception exception)
-            {
-                GBLog.LogError($"Level with callback: {exception}");
-            }
-        }
-
-        public void Abilities(string reason, Action<BusData.AbilitiesData> callMethod)
-        {
-            try
-            {
-                wrappedRoom.Abilities(reason, callMethod);
-            }
-            catch (Exception exception)
-            {
-                GBLog.LogError($"Abilities with callback: {exception}");
-            }
-        }
     }
 }
