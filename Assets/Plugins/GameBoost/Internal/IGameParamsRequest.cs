@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Plugins.GameBoost
 {
-    public interface IGameParamsRequest
+    internal interface IGameParamsRequest
     {
         AsyncResult<string, BusData.LevelData> LevelRequest(string roomNumber);
         AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason, string roomNumber);

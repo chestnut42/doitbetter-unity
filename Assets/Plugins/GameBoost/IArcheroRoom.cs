@@ -88,9 +88,9 @@ namespace Plugins.GameBoost
             Dictionary<string, object> dynamicBalance,
             Dictionary<string, object> roomPlayData);
 
-        public AsyncResult<string, BusData.LevelData> LevelRequest();
+        public IAsyncResult<BusData.LevelData> LevelRequest();
 
-        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason);
+        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string reason);
 
         public void Level(Action<BusData.LevelData> callMethod);
 

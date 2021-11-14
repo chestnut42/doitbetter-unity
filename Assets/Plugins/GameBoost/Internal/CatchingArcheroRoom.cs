@@ -103,7 +103,7 @@ namespace Plugins.GameBoost
             }
         }
 
-        public AsyncResult<string, BusData.LevelData> LevelRequest()
+        public IAsyncResult<BusData.LevelData> LevelRequest()
         {
             try
             {
@@ -116,7 +116,7 @@ namespace Plugins.GameBoost
             return null;
         }
 
-        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason)
+        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string reason)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace Plugins.GameBoost
             {
                 GBLog.LogError($"AbilitiesRequest: {exception}");
             }
-            return null;            
+            return null;
         }
 
         public void Level(Action<BusData.LevelData> callMethod)

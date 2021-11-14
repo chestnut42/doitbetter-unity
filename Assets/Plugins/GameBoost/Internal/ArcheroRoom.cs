@@ -64,12 +64,12 @@ namespace Plugins.GameBoost
             eventTracker.SendEvent(EventNameStarted, eventData);
         }
 
-        public AsyncResult<string, BusData.LevelData> LevelRequest()
+        public IAsyncResult<BusData.LevelData> LevelRequest()
         {
             return gameParamsRequest.LevelRequest(this.roomNumber);
         }
 
-        public AsyncResult<Tuple<string, string>, BusData.AbilitiesData> AbilitiesRequest(string reason)
+        public IAsyncResult<BusData.AbilitiesData> AbilitiesRequest(string reason)
         {
             return gameParamsRequest.AbilitiesRequest(reason, this.roomNumber);
         }
@@ -78,7 +78,7 @@ namespace Plugins.GameBoost
         {
             gameParamsRequest.Level(this.roomNumber, callMethod);
         }
-        
+
         public void Abilities(string reason, Action<BusData.AbilitiesData> callMethod)
         {
             var parameters = new Tuple<string, string>(reason, this.roomNumber);
